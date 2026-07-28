@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('informasis', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')->references('id')->on('informasis')->onDelete('cascade');
             $table->string('key');
-            $table->string('value');
+            $table->text('value');
             $table->timestamps();
             $table->softDeletes();
             

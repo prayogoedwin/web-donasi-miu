@@ -5,10 +5,10 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Settings;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FrontEndController;
 
-Route::get('/', function () {
-    return view('frontend.mainpage');
-})->name('home');
+
+Route::get('/', [FrontEndController::class, 'index'])->name('home');
 
 //alfay merubah sesuatu aku ubah lagi
 

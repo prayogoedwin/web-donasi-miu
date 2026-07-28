@@ -43,8 +43,8 @@ class Program extends Model
         'end_date',
     ];
 
-    public function kategori()
+    public function kategori_program()
     {
-        return $this->belongsTo(KategoriProgram::class, 'kategori_id');
+        return $this->belongsTo(KategoriProgram::class, 'kategori_program_id');
     }
 }
