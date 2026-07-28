@@ -21,9 +21,6 @@ class KategoriProgramController extends Controller
                 ->addColumn('actions', function ($kategoriProgram) {
                     $actions = '';
 
-                    if (auth()->user()->hasPermission('show-kategori-programs')) {
-                        $actions .= '<a href="' . route('kategori-programs.show', $kategoriProgram) . '" class="text-green-600 dark:text-green-400 hover:underline mr-3">View</a>';
-                    }
 
                     if (auth()->user()->hasPermission('edit-kategori-programs')) {
                         $actions .= '<a href="' . route('kategori-programs.edit', $kategoriProgram) . '" class="text-blue-600 dark:text-blue-400 hover:underline mr-3">Edit</a>';
@@ -43,5 +40,59 @@ class KategoriProgramController extends Controller
         }
 
         return response()->json(['error' => 'Invalid request'], 400);
+    }
+
+    public function show(KategoriProgram $kategoriProgram)
+    {
+        return view('kategori-programs.show', compact('kategoriProgram'));
+    }
+
+    public function create()
+    {
+        return view('kategori-programs.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+        KategoriProgram::create(
+            [
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+            ]
+        );
+
+        return redirect()->route('kategori-programs.index')->with('success', 'Kategori Program created successfully.');
+    }
+
+    public function edit(KategoriProgram $kategoriProgram)
+    {
+        return view('kategori-programs.edit', compact('kategoriProgram'));
+    }
+
+    public function update(Request $request, KategoriProgram $kategoriProgram)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+        $kategoriProgram->update([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+        ]);
+
+        return redirect()->route('kategori-programs.index')->with('success', 'Kategori Program updated successfully.');
+    }
+
+    public function destroy(KategoriProgram $kategoriProgram)
+    {
+        $kategoriProgram->delete();
+
+        return redirect()->route('kategori-programs.index')->with('success', 'Kategori Program deleted successfully.');
     }
 }
