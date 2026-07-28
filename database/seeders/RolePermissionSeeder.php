@@ -38,14 +38,15 @@ class RolePermissionSeeder extends Seeder
         }
 
         $superAdminRole = Role::firstOrCreate(['name' => 'super-admin']);
-        $adminRole = Role::firstOrCreate(['name' => 'admin']);
-        $editorRole = Role::firstOrCreate(['name' => 'editor']);
-        $userRole = Role::firstOrCreate(['name' => 'user']);
+        $adminRole = Role::firstOrCreate(['name' => 'Admin']);
+        $ketuaTakmirRole = Role::firstOrCreate(['name' => 'Ketua Takmir']);
+        $anggotaRole = Role::firstOrCreate(['name' => 'Anggota']);
+        $donaturRole = Role::firstOrCreate(['name' => 'Donatur']);
 
         $superAdminRole->permissions()->sync(Permission::all());
         $adminRole->permissions()->sync(Permission::all());
 
-        $editorRole->permissions()->sync(
+        $ketuaTakmirRole->permissions()->sync(
             Permission::whereIn('name', [
                 'view-users', 'show-users',
                 'view-roles', 'show-roles',
@@ -73,24 +74,34 @@ class RolePermissionSeeder extends Seeder
 
         $admin->roles()->sync([$adminRole->id]);
 
-        $editor = User::firstOrCreate(
-            ['email' => 'editor@example.com'],
+        $ketuaTakmir = User::firstOrCreate(
+            ['email' => 'ketuatakmir@example.com'],
             [
-                'name' => 'Editor User',
+                'name' => 'Ketua Takmir User',
                 'password' => Hash::make('password'),
             ]
         );
 
-        $editor->roles()->sync([$editorRole->id]);
+        $ketuaTakmir->roles()->sync([$ketuaTakmirRole->id]);
 
         $user = User::firstOrCreate(
-            ['email' => 'user@example.com'],
+            ['email' => 'anggotaa@example.com'],
             [
-                'name' => 'Regular User',
+                'name' => 'Anggota User',
                 'password' => Hash::make('password'),
             ]
         );
 
-        $user->roles()->sync([$userRole->id]);
+        $user->roles()->sync([$anggotaRole->id]);
+
+        $donatur = User::firstOrCreate(
+            ['email' => 'donatur@example.com'],
+            [
+                'name' => 'Donatur User',
+                'password' => Hash::make('password'),
+            ]
+        );
+
+        $donatur->roles()->sync([$donaturRole->id]);
     }
 }

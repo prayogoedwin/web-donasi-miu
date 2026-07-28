@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donasi Masjid 'Izzatul 'Ulya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#221709;
+    --bronze-950:#241609;
+    --bronze-900:#2E1D0D;
+    --bronze-800:#3F2811;
+    --walnut-700:#6B4A26;
+    --gold-600:#A9791E;
+    --gold-500:#C9A227;
+    --gold-400:#DAB94A;
+    --gold-300:#E8C766;
+    --gold-100:#F1E2B8;
+    --cream-100:#FAF6EC;
+    --cream-200:#F3ECDA;
+    --cream-300:#EAE0C5;
+    --ok:#5C7A4E;
+    --radius-lg:22px;
+    --radius-md:14px;
+    --radius-sm:9px;
+    --shadow-soft: 0 14px 34px -14px rgba(36,22,9,0.35);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  [id]{scroll-margin-top:70px;}
+  body{
+    font-family:'Jost', sans-serif;
+    background:var(--cream-100);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    font-weight:400;
+    line-height:1.55;
+  }
+  img{max-width:100%; display:block;}
+  a{text-decoration:none; color:inherit;}
+  ul{list-style:none;}
+  button{font-family:inherit; cursor:pointer; border:none;}
+  .container{width:100%; max-width:1180px; margin:0 auto; padding:0 20px;}
+  h1,h2,h3,h4{font-family:'Marcellus', serif; font-weight:400; letter-spacing:.2px;}
+  .eyebrow{
+    font-family:'Jost', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:2.6px;
+    font-size:12px;
+    font-weight:600;
+    color:var(--gold-600);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:1px;
+    background:var(--gold-500);
+    display:inline-block;
+  }
+
+  /* ---------- lattice motif (mashrabiya-inspired signature) ---------- */
+  .lattice-divider{
+    width:100%;
+    height:26px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='26' viewBox='0 0 52 26'%3E%3Cg fill='none' stroke='%23C9A227' stroke-width='1.1' opacity='0.55'%3E%3Cpath d='M0 13 L13 0 L26 13 L13 26 Z'/%3E%3Cpath d='M26 13 L39 0 L52 13 L39 26 Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat:repeat-x;
+    background-position:center;
+  }
+  .lattice-bg-fade{
+    position:relative;
+  }
+  .lattice-bg-fade::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Cg fill='none' stroke='%23C9A227' stroke-width='0.9'%3E%3Cpath d='M45 0 L90 45 L45 90 L0 45 Z'/%3E%3Ccircle cx='45' cy='45' r='18'/%3E%3C/g%3E%3C/svg%3E");
+    opacity:.06;
+    pointer-events:none;
+  }
+
+  /* ---------- top utility bar ---------- */
+  .topbar{
+    background:var(--bronze-950);
+    color:var(--gold-200, #E8D9A8);
+    font-size:12px;
+    letter-spacing:.4px;
+  }
+  .topbar .container{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:7px; padding-bottom:7px;
+    color:#D9C591;
+  }
+  .topbar span{opacity:.85}
+
+  /* ---------- header ---------- */
+  header{
+    background:var(--cream-100);
+    position:sticky; top:0; z-index:50;
+    border-bottom:1px solid var(--cream-300);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:center;
+    padding:14px 0;
+  }
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand img{height:38px; width:auto;}
+  .brand-text{line-height:1.15;}
+  .brand-text .name{font-family:'Marcellus',serif; font-size:16px; color:var(--bronze-900);}
+
+  /* ---------- app shell (kitabisa-style home layout) ---------- */
+  .app-shell{background:var(--cream-100); padding-top:16px;}
+
+  .search-bar{
+    display:flex; align-items:center; gap:10px;
+    background:#fff;
+    border:1px solid var(--cream-300);
+    border-radius:999px;
+    padding:13px 18px;
+    box-shadow:0 6px 18px -12px rgba(36,22,9,.25);
+  }
+  .search-bar input{
+    border:none; outline:none; font-family:'Jost',sans-serif;
+    font-size:14px; color:var(--ink); width:100%; background:transparent;
+  }
+  .search-bar input::placeholder{color:#B3A487;}
+
+  .hero-banner{
+    position:relative;
+    margin-top:16px;
+    background:radial-gradient(120% 100% at 100% 0%, #4A3115 0%, var(--bronze-950) 60%);
+    border-radius:26px;
+    padding:26px 22px 0;
+    color:var(--cream-100);
+    overflow:hidden;
+  }
+  .hero-banner-glow{
+    position:absolute; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Cg fill='none' stroke='%23E8C766' stroke-width='0.8'%3E%3Cpath d='M45 0 L90 45 L45 90 L0 45 Z'/%3E%3Ccircle cx='45' cy='45' r='16'/%3E%3C/g%3E%3C/svg%3E");
+    opacity:.14;
+  }
+  .hero-banner .eyebrow{position:relative; z-index:2;}
+  .hero-banner .eyebrow::before{background:var(--gold-300);}
+  .hero-banner h1{
+    position:relative; z-index:2;
+    font-size:27px; line-height:1.28; margin-top:14px; color:var(--cream-100);
+  }
+  .hero-banner h1 em{font-style:normal; color:var(--gold-300);}
+  .hero-banner p.lead{
+    position:relative; z-index:2;
+    font-size:14px; margin-top:12px; color:#E7DCC3; font-weight:300; max-width:340px;
+  }
+  .banner-actions{
+    position:relative; z-index:2;
+    display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;
+  }
+  .store-btn{
+    display:flex; align-items:center; gap:9px;
+    background:rgba(250,246,236,.08);
+    border:1px solid rgba(232,199,102,.35);
+    border-radius:12px;
+    padding:9px 14px;
+    flex:1 1 150px;
+  }
+  .store-btn .store-ic{font-size:17px;}
+  .store-btn span:not(.store-ic){display:flex; flex-direction:column; font-size:12px; color:#D9C591; line-height:1.3;}
+  .store-btn b{font-family:'Marcellus',serif; font-weight:400; font-size:13.5px; color:var(--cream-100);}
+  .hero-banner-photo{
+    position:relative; z-index:2;
+    margin:22px -22px 0;
+    height:150px;
+    border-radius:20px 20px 0 0;
+    overflow:hidden;
+  }
+  .hero-banner-photo img{
+    width:100%; height:100%; object-fit:cover; object-position:center 35%;
+    filter:saturate(1.05);
+  }
+  .hero-banner-photo::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(36,22,9,0) 40%, rgba(36,22,9,.55) 100%);
+  }
+
+  .promo-card{
+    background:#fff;
+    border-radius:20px;
+    margin:-20px 10px 0;
+    position:relative; z-index:3;
+    padding:22px 20px 24px;
+    box-shadow:0 20px 40px -18px rgba(36,22,9,.3);
+    border:1px solid var(--cream-300);
+  }
+  .promo-card h3{font-size:17.5px; color:var(--bronze-900); line-height:1.35;}
+  .promo-card p{font-size:13px; color:var(--walnut-700); margin-top:8px; font-weight:300; line-height:1.6;}
+  .btn-block{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    background:linear-gradient(135deg,var(--gold-400),var(--gold-600));
+    color:var(--bronze-950); font-weight:600; font-size:14.5px;
+    padding:14px; border-radius:14px; margin-top:18px;
+  }
+
+  .menu-section{margin-top:34px; padding-bottom:8px;}
+  .menu-heading{font-size:17px; color:var(--bronze-900); font-weight:400;}
+  .menu-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:18px;
+  }
+  .menu-item{
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    text-align:center; font-size:11.5px; color:var(--walnut-700); font-weight:500;
+  }
+  .menu-icon{
+    width:56px; height:56px; border-radius:18px;
+    background:linear-gradient(150deg,var(--cream-200),var(--cream-300));
+    border:1px solid var(--cream-300);
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px;
+  }
+
+  /* ---------- bottom app nav ---------- */
+  .bottom-nav{
+    position:sticky; bottom:0; z-index:60;
+    background:#fff;
+    border-top:1px solid var(--cream-300);
+    display:flex;
+    box-shadow:0 -8px 24px -14px rgba(36,22,9,.25);
+  }
+  .bottom-nav a{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:4px;
+    padding:10px 4px 12px;
+    font-size:10.5px; color:#A08862; font-weight:500;
+  }
+  .bottom-nav a .bn-ic{font-size:19px; line-height:1;}
+  .bottom-nav a.active{color:var(--gold-600);}
+  .bottom-nav a.active .bn-ic{color:var(--gold-600);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    background:var(--bronze-950);
+    color:var(--cream-100);
+    overflow:hidden;
+    padding-bottom:56px;
+  }
+  .hero-bg{
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(180deg, rgba(20,12,4,.55) 0%, rgba(24,15,6,.82) 55%, var(--bronze-950) 100%),
+      url("bg.jpg");
+    background-size:cover;
+    background-position:center 30%;
+    opacity:.9;
+  }
+  .hero-content{
+    position:relative; z-index:2;
+    padding-top:38px;
+  }
+  .hero .eyebrow{color:var(--gold-300);}
+  .hero .eyebrow::before{background:var(--gold-300);}
+  .hero h1{
+    font-size:34px;
+    line-height:1.22;
+    margin-top:16px;
+    color:var(--cream-100);
+    max-width:520px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--gold-300);
+  }
+  .hero p.lead{
+    margin-top:16px;
+    font-size:15.5px;
+    color:#E7DCC3;
+    max-width:440px;
+    font-weight:300;
+  }
+  .hero-actions{
+    display:flex; gap:12px; margin-top:26px; flex-wrap:wrap;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--gold-300),var(--gold-600));
+    color:var(--bronze-950);
+    padding:14px 26px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:14.5px;
+    box-shadow:0 12px 26px -8px rgba(201,162,39,.55);
+  }
+  .btn-ghost{
+    border:1px solid rgba(232,199,102,.55);
+    color:var(--gold-200,#EFE0AF);
+    padding:14px 24px;
+    border-radius:999px;
+    font-weight:500;
+    font-size:14.5px;
+  }
+
+  .hero-stats{
+    position:relative; z-index:2;
+    margin-top:38px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:rgba(232,199,102,.18);
+    border:1px solid rgba(232,199,102,.22);
+    border-radius:var(--radius-md);
+    overflow:hidden;
+    backdrop-filter:blur(6px);
+  }
+  .hero-stats div{
+    background:rgba(20,13,5,.55);
+    padding:16px 10px;
+    text-align:center;
+  }
+  .hero-stats .num{
+    font-family:'Marcellus',serif;
+    font-size:19px;
+    color:var(--gold-300);
+    display:block;
+  }
+  .hero-stats .label{
+    font-size:10.5px;
+    letter-spacing:.3px;
+    color:#CBB98C;
+    margin-top:3px;
+    display:block;
+  }
+
+  .dome-cut{
+    position:absolute; left:0; right:0; bottom:-1px; z-index:1;
+    width:100%; height:60px;
+  }
+
+  /* ---------- section shell ---------- */
+  section{padding:52px 0;}
+  .section-head{margin-bottom:28px;}
+  .section-head h2{font-size:26px; margin-top:12px; color:var(--bronze-900);}
+  .section-head p{margin-top:10px; color:var(--walnut-700); font-size:14.5px; max-width:520px; font-weight:300;}
+
+  /* ---------- trust strip ---------- */
+  .trust-strip{background:var(--cream-200);}
+  .trust-grid{
+    display:grid; grid-template-columns:1fr; gap:22px;
+  }
+  .trust-item{display:flex; gap:14px; align-items:flex-start;}
+  .trust-icon{
+    width:44px; height:44px; flex:none;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--gold-300),var(--gold-600));
+    display:flex; align-items:center; justify-content:center;
+    color:var(--bronze-950); font-size:18px;
+  }
+  .trust-item h4{font-size:15.5px; color:var(--bronze-900);}
+  .trust-item p{font-size:13.2px; color:var(--walnut-700); margin-top:4px; font-weight:300;}
+
+  /* ---------- featured campaign ---------- */
+  .featured-card{
+    background:var(--bronze-900);
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    color:var(--cream-100);
+    box-shadow:var(--shadow-soft);
+    position:relative;
+  }
+  .featured-card .tag{
+    position:absolute; top:16px; left:16px;
+    background:var(--gold-500); color:var(--bronze-950);
+    font-size:11px; font-weight:700; letter-spacing:.4px;
+    padding:6px 12px; border-radius:999px; z-index:3;
+    text-transform:uppercase;
+  }
+  .featured-img{
+    height:180px;
+    background:linear-gradient(135deg,#4A3115,#241609);
+    position:relative;
+  }
+  .featured-img::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23E8C766' stroke-width='1'%3E%3Cpath d='M30 2 L58 30 L30 58 L2 30 Z'/%3E%3C/g%3E%3C/svg%3E");
+    opacity:.35;
+  }
+  .featured-body{padding:22px;}
+  .featured-body h3{font-size:20px; color:var(--gold-300); line-height:1.3;}
+  .featured-body p{font-size:13.5px; color:#D8CAA6; margin-top:10px; font-weight:300;}
+
+  .progress-wrap{margin-top:18px;}
+  .progress-track{
+    height:8px; border-radius:999px;
+    background:rgba(232,199,102,.18);
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%; border-radius:999px;
+    background:linear-gradient(90deg,var(--gold-500),var(--gold-300));
+  }
+  .progress-meta{
+    display:flex; justify-content:space-between;
+    margin-top:10px; font-size:12.5px; color:#CBB98C;
+  }
+  .progress-meta strong{color:var(--gold-300); font-size:15px; font-family:'Marcellus',serif; font-weight:400;}
+  .featured-foot{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-top:20px;
+  }
+  .btn-on-dark{
+    background:linear-gradient(135deg,var(--gold-300),var(--gold-600));
+    color:var(--bronze-950);
+    padding:11px 22px; border-radius:999px; font-weight:600; font-size:13.5px;
+  }
+  .days-left{font-size:12px; color:#B7A67B;}
+
+  /* ---------- category filter ---------- */
+  .filters{
+    display:flex; gap:10px; overflow-x:auto; padding-bottom:6px;
+    -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .filters::-webkit-scrollbar{display:none;}
+  .chip{
+    flex:none;
+    padding:9px 18px;
+    border-radius:999px;
+    font-size:13px; font-weight:500;
+    border:1px solid var(--cream-300);
+    color:var(--walnut-700);
+    background:var(--cream-100);
+  }
+  .chip.active{
+    background:var(--bronze-900); color:var(--gold-300); border-color:var(--bronze-900);
+  }
+
+  /* ---------- campaign cards grid ---------- */
+  .campaign-grid{
+    margin-top:22px;
+    display:grid; grid-template-columns:1fr; gap:20px;
+  }
+  .campaign-card{
+    background:var(--cream-100);
+    border:1px solid var(--cream-300);
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .campaign-card:hover{transform:translateY(-3px); box-shadow:var(--shadow-soft);}
+  .campaign-thumb{
+    height:150px;
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .campaign-thumb::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70' viewBox='0 0 70 70'%3E%3Cg fill='none' stroke='white' stroke-width='0.8' opacity='0.5'%3E%3Cpath d='M35 3 L67 35 L35 67 L3 35 Z'/%3E%3Ccircle cx='35' cy='35' r='14'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .campaign-thumb .icon{position:relative; z-index:1; font-size:30px;}
+  .t-bangunan{background:linear-gradient(135deg,#8A5A22,#3F2811);}
+  .t-yatim{background:linear-gradient(135deg,#B08324,#4A3115);}
+  .t-operasional{background:linear-gradient(135deg,#6B4A26,#2E1D0D);}
+  .t-pendidikan{background:linear-gradient(135deg,#9C7223,#3B2A18);}
+  .campaign-cat{
+    position:absolute; top:12px; left:12px; z-index:2;
+    background:rgba(250,246,236,.92);
+    color:var(--bronze-900);
+    font-size:10.5px; font-weight:600; letter-spacing:.3px;
+    padding:5px 11px; border-radius:999px;
+  }
+  .campaign-body{padding:18px;}
+  .campaign-body h4{
+    font-family:'Marcellus',serif; font-size:16.5px; color:var(--bronze-900); line-height:1.35;
+  }
+  .campaign-body .by{font-size:12px; color:var(--gold-600); margin-top:4px; font-weight:500;}
+  .c-progress-track{
+    height:6px; border-radius:999px; background:var(--cream-300); overflow:hidden; margin-top:14px;
+  }
+  .c-progress-fill{height:100%; border-radius:999px; background:linear-gradient(90deg,var(--gold-600),var(--gold-400));}
+  .c-meta{display:flex; justify-content:space-between; margin-top:10px; font-size:12px; color:var(--walnut-700);}
+  .c-meta strong{color:var(--bronze-900); font-family:'Marcellus',serif; font-weight:400; font-size:14.5px;}
+  .c-foot{display:flex; justify-content:space-between; align-items:center; margin-top:14px;}
+  .btn-outline-sm{
+    border:1px solid var(--gold-600); color:var(--gold-600);
+    padding:8px 16px; border-radius:999px; font-size:12.5px; font-weight:600;
+  }
+  .donor-count{font-size:11.5px; color:var(--walnut-700);}
+
+  .view-all{
+    display:block; text-align:center; margin-top:26px;
+    padding:14px; border-radius:999px; border:1px solid var(--bronze-900);
+    color:var(--bronze-900); font-weight:600; font-size:14px;
+  }
+
+  /* ---------- about ---------- */
+  .about{background:var(--bronze-950); color:var(--cream-100); position:relative;}
+  .about .eyebrow{color:var(--gold-300);}
+  .about .eyebrow::before{background:var(--gold-300);}
+  .about-inner{position:relative; z-index:2; display:grid; gap:30px;}
+  .about h2{color:var(--cream-100); font-size:25px; margin-top:12px;}
+  .about p{color:#D8CAA6; font-size:14.5px; margin-top:14px; font-weight:300; max-width:520px;}
+  .about-logo-wrap{
+    display:flex; justify-content:center; padding:24px 0;
+  }
+  .about-logo-wrap img{width:150px; filter:drop-shadow(0 10px 24px rgba(0,0,0,.4));}
+  .about-facts{
+    display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:24px;
+  }
+  .about-fact{
+    border:1px solid rgba(232,199,102,.25);
+    border-radius:var(--radius-md);
+    padding:16px;
+  }
+  .about-fact .num{font-family:'Marcellus',serif; color:var(--gold-300); font-size:22px;}
+  .about-fact .lbl{font-size:11.5px; color:#B7A67B; margin-top:4px;}
+
+  /* ---------- how it works ---------- */
+  .steps{
+    display:grid; grid-template-columns:1fr; gap:0;
+  }
+  .step{
+    display:flex; gap:16px; padding:18px 0;
+    border-bottom:1px solid var(--cream-300);
+  }
+  .step:last-child{border-bottom:none;}
+  .step-num{
+    font-family:'Marcellus',serif; font-size:26px; color:var(--gold-500);
+    flex:none; width:42px;
+  }
+  .step h4{font-size:15px; color:var(--bronze-900);}
+  .step p{font-size:13px; color:var(--walnut-700); margin-top:5px; font-weight:300;}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--bronze-950); color:#C9BA92; padding-top:48px;}
+  .footer-grid{display:grid; grid-template-columns:1fr; gap:32px;}
+  .footer-brand{display:flex; gap:12px; align-items:center;}
+  .footer-brand img{height:44px;}
+  .footer-brand .name{font-family:'Marcellus',serif; color:var(--cream-100); font-size:16px;}
+  .footer-brand .place{font-size:11px; color:var(--gold-400); margin-top:2px;}
+  .footer-desc{font-size:13px; margin-top:16px; font-weight:300; line-height:1.7; max-width:420px;}
+  footer h5{
+    color:var(--gold-300); font-size:12.5px; letter-spacing:1px; text-transform:uppercase;
+    margin-bottom:14px; font-weight:600;
+  }
+  footer ul li{font-size:13.5px; margin-bottom:10px; font-weight:300;}
+  .bank-box{
+    background:rgba(232,199,102,.08); border:1px solid rgba(232,199,102,.2);
+    border-radius:var(--radius-md); padding:16px; margin-top:8px;
+  }
+  .bank-box .bank-name{font-size:12px; color:#B7A67B;}
+  .bank-box .bank-num{font-family:'Marcellus',serif; font-size:17px; color:var(--gold-300); margin-top:3px; letter-spacing:.5px;}
+  .bank-box .bank-holder{font-size:11.5px; margin-top:3px; color:#B7A67B;}
+  .social-row{display:flex; gap:10px; margin-top:16px;}
+  .social-row a{
+    width:36px; height:36px; border-radius:50%; border:1px solid rgba(232,199,102,.3);
+    display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--gold-300);
+  }
+  .footer-bottom{
+    margin-top:40px; padding:20px 0; border-top:1px solid rgba(232,199,102,.15);
+    font-size:11.5px; text-align:center; color:#8A7A54;
+  }
+
+  /* ---------- mobile-only lock: center a phone-width frame regardless of viewport ---------- */
+  html, body{background:#DED2B4;}
+  .mobile-frame{
+    max-width:430px;
+    margin:0 auto;
+    background:var(--cream-100);
+    min-height:100vh;
+    position:relative;
+    box-shadow:0 0 0 1px rgba(36,22,9,.06), 0 30px 70px -20px rgba(36,22,9,.35);
+  }
+  body{padding-bottom:0;}
+  .mobile-frame{padding-bottom:70px;}
+</style>
+</head>
+<body>
+<div class="">
+
+  <header>
+    <div class="container nav">
+      <a href="#" class="brand">
+        <img src="logo.png" alt="Logo Masjid Izzatul Ulya">
+        <span class="brand-text">
+          <span class="name">'Izzatul 'Ulya</span>
+        </span>
+      </a>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <div class="container">
+
+      <label class="search-bar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#A9791E" stroke-width="2"/><path d="M20 20L16.5 16.5" stroke="#A9791E" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="text" placeholder="Coba cari &ldquo;Wakaf Kubah Masjid&rdquo;">
+      </label>
+
+      <section class="hero-banner">
+        <div class="hero-banner-glow"></div>
+        <p class="eyebrow" style="color:var(--gold-300)">Portal Donasi &middot; 'Izzatul 'Ulya</p>
+        <h1>Sebar Kebaikan,<br>Rawat Rumah <em>Allah</em></h1>
+        <p class="lead">Satu genggaman untuk menunaikan infak, sedekah, dan wakaf bagi kemakmuran masjid.</p>
+        <div class="banner-actions">
+          <a href="#program" class="store-btn">
+            <span class="store-ic">🤲</span>
+            <span><b>Donasi</b>Program Prioritas</span>
+          </a>
+          <a href="#tentang" class="store-btn">
+            <span class="store-ic">🕌</span>
+            <span><b>Tentang</b>Masjid Kami</span>
+          </a>
+        </div>
+        <div class="hero-banner-photo">
+          <img src="bg.jpg" alt="Interior Masjid Izzatul Ulya">
+        </div>
+      </section>
+
+      <section class="promo-card">
+        <h3>Wujudkan Kubah &amp; Ruang Utama yang Lebih Layak</h3>
+        <p>Bantu percepat penyelesaian renovasi masjid lewat donasi terkurasi & transparan dari Takmir langsung.</p>
+        <a href="#program" class="btn-block">Lihat Program Donasi <span>&rsaquo;</span></a>
+      </section>
+
+      <section class="menu-section">
+        <h4 class="menu-heading">Mau Berbuat Baik Apa Hari Ini?</h4>
+        <div class="menu-grid">
+          <a href="#program" class="menu-item">
+            <span class="menu-icon">🤲</span>
+            <span>Donasi</span>
+          </a>
+          <a href="#program" class="menu-item">
+            <span class="menu-icon">☾</span>
+            <span>Zakat &amp; Infak</span>
+          </a>
+          <a href="#program" class="menu-item">
+            <span class="menu-icon">🕌</span>
+            <span>Wakaf</span>
+          </a>
+          <a href="#alur" class="menu-item">
+            <span class="menu-icon">📅</span>
+            <span>Kegiatan Masjid</span>
+          </a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <section class="trust-strip">
+    <div class="container">
+      <div class="trust-grid">
+        <div class="trust-item">
+          <div class="trust-icon">✓</div>
+          <div>
+            <h4>Pengelola Terverifikasi</h4>
+            <p>Dikelola langsung oleh Takmir & Bendahara Masjid 'Izzatul 'Ulya, bukan pihak ketiga.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">◈</div>
+          <div>
+            <h4>Laporan Transparan</h4>
+            <p>Rekap dana masuk dan penyaluran dipublikasikan tiap bulan di papan infak & laman ini.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">☾</div>
+          <div>
+            <h4>Real-time Progress</h4>
+            <p>Pantau capaian tiap program donasi secara langsung, kapan pun dan di mana pun.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="program">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Program Prioritas</p>
+        <h2>Sedang Butuh Uluran Tangan</h2>
+        <p>Program dengan kebutuhan mendesak dari kepengurusan masjid saat ini.</p>
+      </div>
+
+      <div class="featured-card">
+        <span class="tag">Prioritas</span>
+        <div class="featured-img"></div>
+        <div class="featured-body">
+          <h3>Penyempurnaan Ruang Utama & Kubah Masjid</h3>
+          <p>Melanjutkan renovasi tahap akhir mihrab dan ornamen kubah agar jamaah semakin khusyuk beribadah.</p>
+          <div class="progress-wrap">
+            <div class="progress-track"><div class="progress-fill" style="width:64%"></div></div>
+            <div class="progress-meta">
+              <span><strong>Rp 384.000.000</strong><br>terkumpul</span>
+              <span style="text-align:right">dari target<br><strong>Rp 600.000.000</strong></span>
+            </div>
+          </div>
+          <div class="featured-foot">
+            <span class="days-left">1.482 donatur &middot; 24 hari lagi</span>
+            <a href="#" class="btn-on-dark">Donasi</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0;">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Seluruh Program</p>
+        <h2>Pilih Program Donasi</h2>
+      </div>
+
+      <div class="filters">
+        <button class="chip active" data-filter="semua">Semua</button>
+        <button class="chip" data-filter="pembangunan">Pembangunan</button>
+        <button class="chip" data-filter="operasional">Operasional</button>
+        <button class="chip" data-filter="yatim">Yatim &amp; Dhuafa</button>
+        <button class="chip" data-filter="pendidikan">Pendidikan</button>
+        <button class="chip" data-filter="sosial">Sosial</button>
+      </div>
+
+      <div class="campaign-grid">
+
+        <div class="campaign-card" data-category="pembangunan">
+          <div class="campaign-thumb t-bangunan"><span class="campaign-cat">Pembangunan</span><span class="icon">🕌</span></div>
+          <div class="campaign-body">
+            <h4>Perluasan Lantai 2 untuk Jamaah Wanita</h4>
+            <p class="by">oleh Takmir Masjid 'Izzatul 'Ulya</p>
+            <div class="c-progress-track"><div class="c-progress-fill" style="width:41%"></div></div>
+            <div class="c-meta"><strong>Rp 164jt</strong><span>dari Rp 400jt</span></div>
+            <div class="c-foot">
+              <span class="donor-count">612 donatur</span>
+              <a href="#" class="btn-outline-sm">Donasi</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="campaign-card" data-category="yatim">
+          <div class="campaign-thumb t-yatim"><span class="campaign-cat">Yatim & Dhuafa</span><span class="icon">🤲</span></div>
+          <div class="campaign-body">
+            <h4>Santunan Bulanan 40 Anak Yatim Sariharjo</h4>
+            <p class="by">oleh Bidang Sosial Masjid</p>
+            <div class="c-progress-track"><div class="c-progress-fill" style="width:78%"></div></div>
+            <div class="c-meta"><strong>Rp 39jt</strong><span>dari Rp 50jt</span></div>
+            <div class="c-foot">
+              <span class="donor-count">890 donatur</span>
+              <a href="#" class="btn-outline-sm">Donasi</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="campaign-card" data-category="operasional">
+          <div class="campaign-thumb t-operasional"><span class="campaign-cat">Operasional</span><span class="icon">💡</span></div>
+          <div class="campaign-body">
+            <h4>Infak Listrik, Air & Kebersihan Masjid</h4>
+            <p class="by">Kebutuhan rutin bulanan</p>
+            <div class="c-progress-track"><div class="c-progress-fill" style="width:55%"></div></div>
+            <div class="c-meta"><strong>Rp 11jt</strong><span>dari Rp 20jt</span></div>
+            <div class="c-foot">
+              <span class="donor-count">340 donatur</span>
+              <a href="#" class="btn-outline-sm">Donasi</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="campaign-card" data-category="pendidikan">
+          <div class="campaign-thumb t-pendidikan"><span class="campaign-cat">Pendidikan</span><span class="icon">📖</span></div>
+          <div class="campaign-body">
+            <h4>Wakaf Al-Qur'an & Buku Iqra TPA</h4>
+            <p class="by">oleh Bidang Dakwah & TPA</p>
+            <div class="c-progress-track"><div class="c-progress-fill" style="width:32%"></div></div>
+            <div class="c-meta"><strong>Rp 9,6jt</strong><span>dari Rp 30jt</span></div>
+            <div class="c-foot">
+              <span class="donor-count">211 donatur</span>
+              <a href="#" class="btn-outline-sm">Donasi</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="campaign-card" data-category="pembangunan">
+          <div class="campaign-thumb t-bangunan"><span class="campaign-cat">Pembangunan</span><span class="icon">🚻</span></div>
+          <div class="campaign-body">
+            <h4>Renovasi Tempat Wudhu & Toilet Umum</h4>
+            <p class="by">oleh Takmir Masjid 'Izzatul 'Ulya</p>
+            <div class="c-progress-track"><div class="c-progress-fill" style="width:88%"></div></div>
+            <div class="c-meta"><strong>Rp 70jt</strong><span>dari Rp 80jt</span></div>
+            <div class="c-foot">
+              <span class="donor-count">1.024 donatur</span>
+              <a href="#" class="btn-outline-sm">Donasi</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="campaign-card" data-category="sosial">
+          <div class="campaign-thumb t-operasional"><span class="campaign-cat">Sosial</span><span class="icon">🍚</span></div>
+          <div class="campaign-body">
+            <h4>Dapur Berkah Jumat — Berbagi Nasi Kotak</h4>
+            <p class="by">oleh Bidang Sosial Masjid</p>
+            <div class="c-progress-track"><div class="c-progress-fill" style="width:19%"></div></div>
+            <div class="c-meta"><strong>Rp 3,8jt</strong><span>dari Rp 20jt</span></div>
+            <div class="c-foot">
+              <span class="donor-count">88 donatur</span>
+              <a href="#" class="btn-outline-sm">Donasi</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <a href="#" class="view-all">Lihat Semua Program &rarr;</a>
+    </div>
+  </section>
+
+  <div class="lattice-divider"></div>
+
+  <section class="about lattice-bg-fade" id="tentang">
+    <div class="container about-inner">
+      <div>
+        <p class="eyebrow">Tentang Kami</p>
+        <h2>Masjid 'Izzatul 'Ulya</h2>
+        <p>Berdiri di Nandan, Sariharjo, Ngaglik, Sleman, Masjid 'Izzatul 'Ulya menjadi pusat ibadah dan kegiatan sosial-dakwah bagi warga sekitar. Portal donasi ini adalah kanal resmi kepengurusan masjid untuk menghimpun infak, sedekah, dan wakaf dari donatur di mana saja.</p>
+        <div class="about-facts">
+          <div class="about-fact"><span class="num">1.200+</span><span class="lbl">Jamaah Tetap</span></div>
+          <div class="about-fact"><span class="num">12</span><span class="lbl">Tahun Melayani</span></div>
+          <div class="about-fact"><span class="num">30+</span><span class="lbl">Kegiatan Dakwah/Th</span></div>
+          <div class="about-fact"><span class="num">100%</span><span class="lbl">Dana Tersalurkan</span></div>
+        </div>
+      </div>
+      <div class="about-logo-wrap">
+        <img src="logo.png" alt="Logo Masjid Izzatul Ulya">
+      </div>
+    </div>
+  </section>
+
+  <section id="alur">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Cara Berdonasi</p>
+        <h2>Tiga Langkah Sederhana</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">01</span>
+          <div><h4>Pilih Program</h4><p>Tentukan program donasi sesuai niat & kepedulian Anda.</p></div>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <div><h4>Isi Nominal & Data</h4><p>Masukkan jumlah donasi dan data diri (opsional anonim).</p></div>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <div><h4>Bayar via Transfer/QRIS</h4><p>Selesaikan pembayaran melalui bank transfer, e-wallet, atau QRIS.</p></div>
+        </div>
+        <div class="step">
+          <span class="step-num">04</span>
+          <div><h4>Terima Bukti & Doa</h4><p>Bukti donasi dikirim otomatis, doa jazakumullahu khairan menyertai.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="kontak">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <img src="logo.png" alt="Logo">
+            <div>
+              <div class="name">'Izzatul 'Ulya</div>
+              <div class="place">Masjid Nandan, Sariharjo, Ngaglik, Sleman</div>
+            </div>
+          </div>
+          <p class="footer-desc">Portal donasi resmi Masjid 'Izzatul 'Ulya. Dikelola oleh Takmir untuk kemakmuran masjid, pendidikan, serta kepedulian sosial jamaah dan warga sekitar.</p>
+          <div class="social-row">
+            <a href="#">IG</a>
+            <a href="#">FB</a>
+            <a href="#">WA</a>
+          </div>
+        </div>
+        <div>
+          <h5>Tautan</h5>
+          <ul>
+            <li><a href="#program">Program Donasi</a></li>
+            <li><a href="#tentang">Tentang Masjid</a></li>
+            <li><a href="#alur">Cara Berdonasi</a></li>
+            <li><a href="#">Laporan Keuangan</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Rekening Resmi</h5>
+          <div class="bank-box">
+            <div class="bank-name">Bank Syariah Indonesia (BSI)</div>
+            <div class="bank-num">7 xxx xxx xxx</div>
+            <div class="bank-holder">a.n. Takmir Masjid Izzatul Ulya</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 Masjid 'Izzatul 'Ulya — Konsep desain portal donasi. Semua nominal & progres pada mockup ini adalah data contoh.
+      </div>
+    </div>
+  </footer>
+
+  <nav class="bottom-nav">
+    <a href="#" class="active"><span class="bn-ic">⌂</span>Beranda</a>
+    <a href="#program"><span class="bn-ic">🎁</span>Program</a>
+    <a href="#program"><span class="bn-ic">🧾</span>Donasi</a>
+    <a href="#tentang"><span class="bn-ic">🔔</span>Kabar</a>
+    <a href="#kontak"><span class="bn-ic">☰</span>Akun</a>
+  </nav>
+
+</div>
+<script>
+  // Filter program by category — chips are real buttons now
+  document.querySelectorAll('.chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      document.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('active'); });
+      chip.classList.add('active');
+      var filter = chip.getAttribute('data-filter');
+      document.querySelectorAll('.campaign-card').forEach(function(card){
+        var match = (filter === 'semua') || (card.getAttribute('data-category') === filter);
+        card.style.display = match ? '' : 'none';
+      });
+    });
+  });
+
+  // Keep bottom-nav active state in sync with taps
+  document.querySelectorAll('.bottom-nav a').forEach(function(link){
+    link.addEventListener('click', function(){
+      document.querySelectorAll('.bottom-nav a').forEach(function(a){ a.classList.remove('active'); });
+      link.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
