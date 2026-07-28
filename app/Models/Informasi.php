@@ -15,4 +15,9 @@ class Informasi extends Model
         'key',
         'value',
     ];
+
+    public function parent()
+    {
+        return $this->belongsTo(Informasi::class, 'parent_id');
+    }
 }

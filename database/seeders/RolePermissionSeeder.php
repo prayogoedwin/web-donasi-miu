@@ -31,6 +31,26 @@ class RolePermissionSeeder extends Seeder
             'edit-permissions',
             'download-permissions',
             'delete-permissions',
+
+            'view-programs',
+            'show-programs',
+            'create-programs',
+            'edit-programs',
+            'download-programs',
+            'delete-programs',
+
+            'view-kategori-programs',
+            'show-kategori-programs',
+            'create-kategori-programs',
+            'edit-kategori-programs',
+            'delete-kategori-programs',
+
+            'view-informasis',
+            'show-informasis',
+            'create-informasis',
+            'edit-informasis',
+            'delete-informasis',
+            
         ];
 
         foreach ($permissions as $permissionName) {
