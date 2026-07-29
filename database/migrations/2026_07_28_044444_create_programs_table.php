@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('link')->unique();
             $table->text('description');
             $table->boolean('is_priority')->default(false);
             $table->foreignId('kategori_program_id')->constrained('kategori_programs')->default(1); // Pembangunan, Operasional, Sosial, Pendidikan, Yatim & Dhuafa, Kesehatan, Lainnya

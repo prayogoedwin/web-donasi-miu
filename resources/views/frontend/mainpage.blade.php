@@ -87,6 +87,7 @@
             </div>
         </section>
 
+
         <section id="program">
             <div class="container">
                 <div class="section-head">
@@ -94,28 +95,30 @@
                     <h2>Sedang Butuh Uluran Tangan</h2>
                     <p>Program dengan kebutuhan mendesak dari kepengurusan masjid saat ini.</p>
                 </div>
-
+                @if($program_prioritas)
                 <div class="featured-card">
                     <span class="tag">Prioritas</span>
                     <div class="featured-img"></div>
                     <div class="featured-body">
-                        <h3>Penyempurnaan Ruang Utama & Kubah Masjid</h3>
-                        <p>Melanjutkan renovasi tahap akhir mihrab dan ornamen kubah agar jamaah semakin khusyuk beribadah.</p>
+                        <h3>{{ $program_prioritas->title ?? '' }}</h3>
+                        <p>{{ $program_prioritas->description ?? '' }}</p>
                         <div class="progress-wrap">
                             <div class="progress-track">
                                 <div class="progress-fill" style="width:64%"></div>
                             </div>
                             <div class="progress-meta">
-                                <span><strong>Rp 384.000.000</strong><br>terkumpul</span>
-                                <span style="text-align:right">dari target<br><strong>Rp 600.000.000</strong></span>
+                                <span><strong>Rp {{ number_format($program_prioritas->collected_amount ?? 0, 0, ',', '.') }}</strong><br>terkumpul</span>
+                                <span style="text-align:right">dari target<br><strong>Rp {{ number_format($program_prioritas->target_amount ?? 0, 0, ',', '.') }}</strong></span>
                             </div>
                         </div>
                         <div class="featured-foot">
-                            <span class="days-left">1.482 donatur &middot; 24 hari lagi</span>
-                            <a href="#" class="btn-on-dark">Donasi</a>
+                            <span class="days-left">{{ number_format($program_prioritas->donor_count ?? 0, 0, ',', '.') }} donatur &middot; {{ $program_prioritas->days_left ?? 0 }} hari lagi</span>
+                            <a href="{{ route('donasi', $program_prioritas->link) }}" class="btn-on-dark">Donasi</a>
                         </div>
                     </div>
                 </div>
+                @endif
+
             </div>
         </section>
 
@@ -162,7 +165,7 @@
                             </div>
                             <div class="c-foot">
                                 <span class="donor-count">{{ number_format($program->donor_count, 0, ',', '.') }} donatur</span>
-                                <a href="" class="btn-outline-sm">Donasi</a>
+                                <a href="{{ route('donasi', $program->link) }}" class="btn-outline-sm">Donasi</a>
                             </div>
                         </div>
                     </div>

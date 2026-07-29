@@ -21,6 +21,10 @@ class ProgramController extends Controller
             $programs = Program::with('kategori_program')->select('programs.*');
             
             return DataTables::of($programs)
+                ->editColumn('title', function ($program) {
+                    //jika priortas maka hijau
+                    return $program->is_priority ? '<span class="text-green-600 dark:text-green-400 font-bold">' . $program->title . '</span>' : $program->title;
+                })
                 ->addColumn('kategori_programs', function ($program) {
                     return $program->kategori_program ? $program->kategori_program->title : '<span class="text-sm text-gray-500 dark:text-gray-400">No category</span>';
                 })
@@ -54,7 +58,7 @@ class ProgramController extends Controller
                 ->editColumn('created_at', function ($program) {
                     return $program->created_at->format('M d, Y');
                 })
-                ->rawColumns(['kategori_programs', 'actions', 'progress'])
+                ->rawColumns(['kategori_programs', 'actions', 'progress', 'title'])
                 ->make(true);
         }
 
@@ -85,7 +89,13 @@ class ProgramController extends Controller
             'kategori_program_id' => 'required|exists:kategori_programs,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
+            'is_priority' => 'nullable|boolean',
         ]);
+
+        //hanya bisa 1 program yang is_priority = true
+        if ($request->input('is_priority')) {
+            Program::where('is_priority', true)->update(['is_priority' => false]);
+        }
 
         Program::create($request->all());
 
@@ -110,7 +120,13 @@ class ProgramController extends Controller
             'kategori_program_id' => 'required|exists:kategori_programs,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
+            'is_priority' => 'nullable|boolean',
         ]);
+
+        //hanya bisa 1 program yang is_priority = true
+        if ($request->input('is_priority')) {
+            Program::where('is_priority', true)->where('id', '!=', $program->id)->update(['is_priority' => false]);
+        }
 
         $program->update($request->all());
 

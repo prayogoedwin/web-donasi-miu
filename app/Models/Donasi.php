@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Program;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Donasi extends Model
@@ -26,6 +27,11 @@ class Donasi extends Model
         'nama',
         'nomor_hp',
         'jumlah_donasi',
+        'metode_pembayaran_id',
+        'status',
+        'transaction_id',
+        'payment_url',
+        'success_at',
     ];
 
     public function program()

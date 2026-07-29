@@ -17,6 +17,11 @@ return new class extends Migration
             $table->string('nama');
             $table->string('nomor_hp');
             $table->integer('jumlah_donasi');
+            $table->foreignId('metode_pembayaran_id')->nullable()->constrained('metode_pembayarans')->onDelete('set null');
+            $table->string('status')->default('pending'); // pending, completed, failed
+            $table->string('transaction_id')->nullable();
+            $table->string('payment_url')->nullable();
+            $table->timestamp('success_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

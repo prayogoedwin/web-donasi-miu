@@ -13,6 +13,8 @@ use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\TripayController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
+Route::get('/donasi/{link}', [FrontEndController::class, 'donasi'])->name('donasi');
+Route::post('/donasi/{program}', [FrontEndController::class, 'donasiStore'])->name('donasi.store');
 
 //alfay merubah sesuatu aku ubah lagi
 

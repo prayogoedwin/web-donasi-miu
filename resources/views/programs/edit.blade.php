@@ -35,8 +35,8 @@
                 @csrf
                 @method('PUT')
 
-                
-                
+
+
                 <div class="mb-4">
                     <x-forms.input label="Judul" name="title" type="text" value="{{ old('title', $program->title) }}" required />
                 </div>
@@ -67,7 +67,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <x-forms.input label="Target Donasi" name="target_amount" type="number"  value="{{ old('target_amount', $program->target_amount) }}" required />
+                    <x-forms.input label="Target Donasi" name="target_amount" type="number" value="{{ old('target_amount', $program->target_amount) }}" required />
                 </div>
 
                 <div class="mb-4">
@@ -76,6 +76,26 @@
 
                 <div class="mb-4">
                     <x-forms.input label="Tanggal Berakhir" name="end_date" type="date" value="{{ old('end_date', $program->end_date) }}" required />
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Prioritas
+                    </label>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Hanya satu program yang dapat diprioritaskan. (jika dipilih "Ya", program lain akan otomatis tidak diprioritaskan)</p>
+
+                    <select
+                        name="is_priority"
+                        class="block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm p-2">
+
+                        <option value="0" {{ old('is_priority', $program->is_priority) == '0' ? 'selected' : '' }}>Tidak</option>
+                        <option value="1" {{ old('is_priority', $program->is_priority) == '1' ? 'selected' : '' }}>Ya</option>
+
+                    </select>
+
+                    @error('is_priority')
+                    <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="mb-6">

@@ -32,6 +32,7 @@ class Program extends Model
     
     protected $fillable = [
         'title',
+        'link',
         'description',
         'is_priority',
         'kategori_program_id',
@@ -44,6 +45,38 @@ class Program extends Model
         'end_date',
     ];
 
+    public static function booted()
+    {
+        static::creating(function ($program) {
+            // Generate a unique link based on the title
+            $program->link = self::generateUniqueLink($program->title);
+        });
+
+        static::updated(function ($program) {
+            // If the title has changed, update the link
+            if ($program->isDirty('title')) {
+                $program->link = self::generateUniqueLink($program->title);
+                $program->save();
+            }
+        });
+    }
+
+    private static function generateUniqueLink($title)
+    {
+        // Convert the title to a URL-friendly format
+        $link = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $title));
+
+        // Check if the link already exists in the database
+        $count = self::where('link', 'like', $link . '%')->count();
+
+        // If it exists, append a number to make it unique
+        if ($count > 0) {
+            $link .= '-' . ($count + 1);
+        }
+
+        return $link;
+    }
+
     public function kategori_program()
     {
         return $this->belongsTo(KategoriProgram::class, 'kategori_program_id');
@@ -52,5 +85,17 @@ class Program extends Model
     public function donasis()
     {
         return $this->hasMany(Donasi::class);
+    }
+
+    public function getDaysLeftAttribute()
+    {
+        $today = now();
+        $endDate = $this->end_date;
+
+        if ($endDate && $today <= $endDate) {
+            return (int) $today->diffInDays($endDate);
+        }
+
+        return 0; // Return 0 if the program has ended or no end date is set
     }
 }

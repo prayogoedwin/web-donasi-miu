@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
 
             TripaySeeder::class,
+            MetodePembayaranSeeder::class,
         ]);
     }
 }
