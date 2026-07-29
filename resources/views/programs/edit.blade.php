@@ -51,31 +51,31 @@
                     </label>
 
                     <select
-                        name="category_program"
+                        name="kategori_program_id"
                         class="block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm p-2">
 
                         @foreach($kategori_programs as $kategori)
-                        <option value="{{ $kategori['id'] }}" {{ old('category_program', $program->category_program) == $kategori['id'] ? 'selected' : '' }}>
+                        <option value="{{ $kategori['id'] }}" {{ old('kategori_program_id', $program->kategori_program_id) == $kategori['id'] ? 'selected' : '' }}>
                             {{ $kategori['title'] }}
                         </option>
                         @endforeach
                     </select>
 
-                    @error('category_program')
+                    @error('kategori_program_id')
                     <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div class="mb-4">
-                    <x-forms.input label="Target Donasi" name="target_donasi" type="number"  value="{{ old('target_donasi', $program->target_donasi) }}" required />
+                    <x-forms.input label="Target Donasi" name="target_amount" type="number"  value="{{ old('target_amount', $program->target_amount) }}" required />
                 </div>
 
                 <div class="mb-4">
-                    <x-forms.input label="Tanggal Mulai" name="tanggal_mulai" type="date" value="{{ old('tanggal_mulai', $program->tanggal_mulai) }}" required />
+                    <x-forms.input label="Tanggal Mulai" name="start_date" type="date" value="{{ old('start_date', $program->start_date) }}" required />
                 </div>
 
                 <div class="mb-4">
-                    <x-forms.input label="Tanggal Berakhir" name="tanggal_berakhir" type="date" value="{{ old('tanggal_berakhir', $program->tanggal_berakhir) }}" required />
+                    <x-forms.input label="Tanggal Berakhir" name="end_date" type="date" value="{{ old('end_date', $program->end_date) }}" required />
                 </div>
 
                 <div class="mb-6">
@@ -88,7 +88,7 @@
                         class="block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm p-2">
 
                         <option value="active" {{ old('status', $program->status) == 'active' ? 'selected' : '' }}>Aktif</option>
-                        <option value="inactive" {{ old('status', $program->status) == 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
+                        <option value="tidak aktif" {{ old('status', $program->status) == 'tidak aktif' ? 'selected' : '' }}>Tidak Aktif</option>
                     </select>
 
                     @error('status')

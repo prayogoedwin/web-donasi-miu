@@ -68,9 +68,12 @@ class ProgramController extends Controller
 
     public function create()
     {
-        $kategoriPrograms = KategoriProgram::all();
-        
-        return view('programs.create', compact('kategoriPrograms'));
+        $kategori_programs = KategoriProgram::all();
+
+        $start_date = now()->format('Y-m-d');
+        $end_date = now()->addDays(30)->format('Y-m-d');
+
+        return view('programs.create', compact('kategori_programs', 'start_date', 'end_date'));
     }
 
     public function store(Request $request)
@@ -80,6 +83,8 @@ class ProgramController extends Controller
             'description' => 'required|string|max:255',
             'target_amount' => 'required|numeric|min:0',
             'kategori_program_id' => 'required|exists:kategori_programs,id',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
         Program::create($request->all());
@@ -90,9 +95,10 @@ class ProgramController extends Controller
     public function edit(Program $program)
     {
 
-        $kategoriPrograms = KategoriProgram::all();
+        $kategori_programs = KategoriProgram::all();
+        
 
-        return view('programs.edit', compact('program', 'kategoriPrograms'));
+        return view('programs.edit', compact('program', 'kategori_programs'));
     }
 
     public function update(Request $request, Program $program)
@@ -102,6 +108,8 @@ class ProgramController extends Controller
             'description' => 'required|string|max:255',
             'target_amount' => 'required|numeric|min:0',
             'kategori_program_id' => 'required|exists:kategori_programs,id',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
         $program->update($request->all());

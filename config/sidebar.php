@@ -40,7 +40,7 @@ return [
     [
         'title' => 'Program Management',
         'icon' => 'fas-book',
-        'active' => ['programs*'],
+        'active' => ['programs*', 'kategori-programs*'],
         'permission' => ['view-programs', 'create-programs', 'edit-programs', 'delete-programs'], // Parent muncul jika punya salah satu
         'children' => [
             [

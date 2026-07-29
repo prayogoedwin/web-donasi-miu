@@ -14,6 +14,7 @@ class Informasi extends Model
     protected $fillable = [
         'key',
         'value',
+        'parent_id',
     ];
 
     public function parent()
