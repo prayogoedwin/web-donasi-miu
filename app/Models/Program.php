@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\KategoriProgram;
+use App\Models\Donasi;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Program extends Model
@@ -46,5 +47,10 @@ class Program extends Model
     public function kategori_program()
     {
         return $this->belongsTo(KategoriProgram::class, 'kategori_program_id');
+    }
+
+    public function donasis()
+    {
+        return $this->hasMany(Donasi::class);
     }
 }

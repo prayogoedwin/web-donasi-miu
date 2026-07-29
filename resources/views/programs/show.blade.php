@@ -63,10 +63,19 @@
 
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Jumlah Donasi Terkumpul
+                </label>
+                <div class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    {{ $program->collected_amount }}
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Target Donasi
                 </label>
                 <div class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                    {{ $program->target_donasi }}
+                    {{ $program->target_amount }}
                 </div>
             </div>
 

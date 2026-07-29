@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\KategoriProgramController;
+use App\Http\Controllers\DonasiController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
 
@@ -90,6 +91,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('informasis/{informasi}', [InformasiController::class, 'update'])->name('informasis.update')->middleware('permission:edit-informasis');
     Route::delete('informasis/{informasi}', [InformasiController::class, 'destroy'])->name('informasis.destroy')->middleware('permission:delete-informasis');
 
+    Route::get('donasis', [DonasiController::class, 'index'])->name('donasis.index')->middleware('permission:view-donasis');
+    Route::get('donasis/table', [DonasiController::class, 'indexTable'])->name('donasis.indexTable')->middleware('permission:view-donasis');
+    Route::get('donasis/export', [DonasiController::class, 'export'])->name('donasis.export')->middleware('permission:download-donasis');
 });
 
 require __DIR__.'/auth.php';

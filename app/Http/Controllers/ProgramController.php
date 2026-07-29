@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Program;
+use App\Models\KategoriProgram;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -67,7 +68,9 @@ class ProgramController extends Controller
 
     public function create()
     {
-        return view('programs.create');
+        $kategoriPrograms = KategoriProgram::all();
+        
+        return view('programs.create', compact('kategoriPrograms'));
     }
 
     public function store(Request $request)
@@ -86,7 +89,10 @@ class ProgramController extends Controller
 
     public function edit(Program $program)
     {
-        return view('programs.edit', compact('program'));
+
+        $kategoriPrograms = KategoriProgram::all();
+
+        return view('programs.edit', compact('program', 'kategoriPrograms'));
     }
 
     public function update(Request $request, Program $program)

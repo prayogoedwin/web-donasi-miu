@@ -65,7 +65,12 @@ return [
         'active' => ['informasis*'],
         'permission' => ['view-informasis', 'create-informasis', 'edit-informasis', 'delete-informasis'], // Parent muncul jika punya salah satu
         'route' => 'informasis.index',
-
-        
+    ],
+    [
+        'title' => 'Riwayat Donasi',
+        'icon' => 'fas-hand-holding-heart',
+        'active' => ['donasis*'],
+        'permission' => ['view-donasis', 'create-donasis', 'edit-donasis', 'delete-donasis'], // Parent muncul jika punya salah satu
+        'route' => 'donasis.index',
     ],
 ];
