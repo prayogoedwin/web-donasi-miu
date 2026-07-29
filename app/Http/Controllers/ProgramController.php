@@ -59,4 +59,54 @@ class ProgramController extends Controller
 
         return response()->json(['error' => 'Invalid request'], 400);
     }
+
+    public function show(Program $program)
+    {
+        return view('programs.show', compact('program'));
+    }
+
+    public function create()
+    {
+        return view('programs.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'target_amount' => 'required|numeric|min:0',
+            'kategori_program_id' => 'required|exists:kategori_programs,id',
+        ]);
+
+        Program::create($request->all());
+
+        return redirect()->route('programs.index')->with('success', 'Program created successfully.');
+    }
+
+    public function edit(Program $program)
+    {
+        return view('programs.edit', compact('program'));
+    }
+
+    public function update(Request $request, Program $program)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'target_amount' => 'required|numeric|min:0',
+            'kategori_program_id' => 'required|exists:kategori_programs,id',
+        ]);
+
+        $program->update($request->all());
+
+        return redirect()->route('programs.index')->with('success', 'Program updated successfully.');
+    }
+
+    public function destroy(Program $program)
+    {
+        $program->delete();
+
+        return redirect()->route('programs.index')->with('success', 'Program deleted successfully.');
+    }
 }
