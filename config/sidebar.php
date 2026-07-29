@@ -73,4 +73,12 @@ return [
         'permission' => ['view-donasis', 'create-donasis', 'edit-donasis', 'delete-donasis'], // Parent muncul jika punya salah satu
         'route' => 'donasis.index',
     ],
+
+    [
+        'title' => 'Tripay Configuration',
+        'icon' => 'fas-cogs',
+        'active' => ['tripay*'],
+        'permission' => ['view-tripay', 'edit-tripay'], // Parent muncul jika punya salah satu
+        'route' => 'tripay.index',
+    ],
 ];

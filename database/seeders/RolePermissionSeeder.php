@@ -49,7 +49,7 @@ class RolePermissionSeeder extends Seeder
             'show-informasis',
             'create-informasis',
             'edit-informasis',
-            
+
             'delete-informasis',
             
             'view-donasis',
@@ -58,6 +58,9 @@ class RolePermissionSeeder extends Seeder
             'edit-donasis',
             'delete-donasis',
             'download-donasis',
+
+            'view-tripay',
+            'edit-tripay',
         ];
 
         foreach ($permissions as $permissionName) {

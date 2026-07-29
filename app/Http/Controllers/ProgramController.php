@@ -89,7 +89,7 @@ class ProgramController extends Controller
 
         Program::create($request->all());
 
-        return redirect()->route('programs.index')->with('success', 'Program created successfully.');
+        return redirect()->route('programs.index')->with('status', 'Program created successfully.');
     }
 
     public function edit(Program $program)
@@ -114,13 +114,13 @@ class ProgramController extends Controller
 
         $program->update($request->all());
 
-        return redirect()->route('programs.index')->with('success', 'Program updated successfully.');
+        return redirect()->route('programs.index')->with('status', 'Program updated successfully.');
     }
 
     public function destroy(Program $program)
     {
         $program->delete();
 
-        return redirect()->route('programs.index')->with('success', 'Program deleted successfully.');
+        return redirect()->route('programs.index')->with('status', 'Program deleted successfully.');
     }
 }

@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             ProgramSeeder::class,
             InformasiSeeder::class,
             RolePermissionSeeder::class,
+
+            TripaySeeder::class,
         ]);
     }
 }

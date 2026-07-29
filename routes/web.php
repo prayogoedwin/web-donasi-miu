@@ -10,6 +10,7 @@ use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\KategoriProgramController;
 use App\Http\Controllers\DonasiController;
+use App\Http\Controllers\TripayController;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('home');
 
@@ -94,6 +95,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('donasis', [DonasiController::class, 'index'])->name('donasis.index')->middleware('permission:view-donasis');
     Route::get('donasis/table', [DonasiController::class, 'indexTable'])->name('donasis.indexTable')->middleware('permission:view-donasis');
     Route::get('donasis/export', [DonasiController::class, 'export'])->name('donasis.export')->middleware('permission:download-donasis');
+
+    Route::get('tripay', [TripayController::class, 'index'])->name('tripay.index')->middleware('permission:view-tripay');
+    Route::put('tripay', [TripayController::class, 'update'])->name('tripay.update')->middleware('permission:edit-tripay');
 });
 
 require __DIR__.'/auth.php';
