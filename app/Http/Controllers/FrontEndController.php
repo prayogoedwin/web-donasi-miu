@@ -8,6 +8,10 @@ use App\Models\Donasi;
 use App\Models\Program;
 use App\Models\Informasi;
 use App\Models\MetodePembayaran;
+use Illuminate\Support\Str;
+
+use Midtrans\Config;
+use Midtrans\Snap;
 
 class FrontEndController extends Controller
 {
@@ -72,22 +76,73 @@ class FrontEndController extends Controller
     public function donasiStore(Program $program, Request $request)
     {
         $request->validate([
-            'jumlah_donasi' => 'required|numeric|min:1',
-            'nama' => 'required|string|max:255',
-            'nomor_hp' => 'required|string|max:20',
-            'metode_pembayaran_id' => 'required|exists:metode_pembayarans,id',
+            'jumlah_donasi' => 'required|numeric|min:1000', // Batas minimal pembayaran online
+            'nama'          => 'required|string|max:255',
+            'nomor_hp'      => 'required|string|max:20',
+            'metode_pembayaran_id' => 'nullable', // Boleh diabaikan jika memilih metode langsung di popup Snap
         ]);
 
+        // 1. Generate Order ID Unik
+        $orderId = 'DONASI-' . time() . '-' . Str::random(5);
+
+        // 2. Simpan Data Donasi Awal ke Database
         $donasi = Donasi::create([
-            'program_id' => $program->id,
-            'jumlah_donasi' => $request->input('jumlah_donasi'),
-            'nama' => $request->input('nama'),
-            'nomor_hp' => $request->input('nomor_hp'),
+            'order_id'             => $orderId,
+            'program_id'           => $program->id,
+            'jumlah_donasi'        => $request->input('jumlah_donasi'),
+            'nama'                 => $request->input('nama'),
+            'nomor_hp'             => $request->input('nomor_hp'),
             'metode_pembayaran_id' => $request->input('metode_pembayaran_id'),
+            'status_pembayaran'    => 'pending',
         ]);
 
-        // dd($donasi);
+        // 3. Konfigurasi SDK Midtrans
+        Config::$serverKey     = config('services.midtrans.server_key', env('MIDTRANS_SERVER_KEY'));
+        Config::$isProduction  = config('services.midtrans.is_production', env('MIDTRANS_IS_PRODUCTION', false));
+        Config::$isSanitized   = config('services.midtrans.is_sanitized', env('MIDTRANS_IS_SANITIZED', true));
+        Config::$is3ds         = config('services.midtrans.is_3ds', env('MIDTRANS_IS_3DS', true));
 
-        return redirect()->route('frontend.mainpage')->with('status', 'Donasi berhasil.');
+        // 4. Susun Payload untuk Midtrans Snap
+        $params = [
+            'transaction_details' => [
+                'order_id'     => $donasi->order_id,
+                'gross_amount' => (int) $donasi->jumlah_donasi,
+            ],
+            'customer_details' => [
+                'first_name' => $donasi->nama,
+                'phone'      => $donasi->nomor_hp,
+            ],
+            'item_details' => [
+                [
+                    'id'       => 'PROG-' . $program->id,
+                    'price'    => (int) $donasi->jumlah_donasi,
+                    'quantity' => 1,
+                    'name'     => Str::limit('Donasi: ' . $program->title, 50),
+                ]
+            ],
+        ];
+
+        try {
+            // 5. Minta Snap Token dari Midtrans
+            $snapToken = Snap::getSnapToken($params);
+
+            // Update record donasi dengan Snap Token
+            $donasi->update(['snap_token' => $snapToken]);
+
+            // 6. Redirect ke halaman pembayaran dengan membawa token
+            return redirect()->route('donasi.pembayaran', $donasi->order_id);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal memproses pembayaran: ' . $e->getMessage());
+        }
+    }
+
+    public function pembayaran(string $orderId)
+    {
+        $donasi = Donasi::where('order_id', $orderId)->firstOrFail();
+
+        return view('frontend.pembayaran', [
+            'donasi' => $donasi,
+            'clientKey' => env('MIDTRANS_CLIENT_KEY')
+        ]);
     }
 }

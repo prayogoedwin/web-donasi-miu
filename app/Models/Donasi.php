@@ -23,6 +23,7 @@ class Donasi extends Model
     protected $table = 'donasis';
 
     protected $fillable = [
+        'order_id',
         'program_id',
         'nama',
         'nomor_hp',
@@ -32,6 +33,9 @@ class Donasi extends Model
         'transaction_id',
         'payment_url',
         'success_at',
+        'snap_token',
+        'status_pembayaran',
+
     ];
 
     public function program()
