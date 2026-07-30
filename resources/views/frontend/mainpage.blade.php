@@ -130,20 +130,18 @@
                 </div>
 
                 <div class="filters">
-                    <button class="chip active" data-filter="semua">Semua</button>
-                    <button class="chip" data-filter="pembangunan">Pembangunan</button>
-                    <button class="chip" data-filter="operasional">Operasional</button>
-                    <button class="chip" data-filter="yatim">Yatim &amp; Dhuafa</button>
-                    <button class="chip" data-filter="pendidikan">Pendidikan</button>
-                    <button class="chip" data-filter="sosial">Sosial</button>
+                    <button class="chip active" data-filter="Semua">Semua</button>
+                    @foreach($kategori_programs as $kategori)
+                    <button class="chip" data-filter="{{ $kategori->title }}">{{ $kategori->title }}</button>
+                    @endforeach
+                    
                 </div>
 
                 <div class="campaign-grid">
                     @forelse($programs as $program)
-                    <div class="campaign-card" data-category="{{ Str::slug($program->kategori_program->name ?? 'semua') }}">
-                        <div class="campaign-thumb {{ $program->theme_class ?? 't-bangunan' }}">
+                    <div class="campaign-card" data-category="{{ $program->kategori_program->title ?? 'lainnya' }}">
+                        <div class="campaign-thumb" style="background-image: url('{{ asset($program->image_path) }}');">
                             <span class="campaign-cat">{{ $program->kategori_program->title  }}</span>
-                            <span class="icon">{{ $program->icon ?? '🕌' }}</span>
                         </div>
                         <div class="campaign-body">
                             <h4>{{ $program->title }}</h4>
@@ -176,7 +174,6 @@
                     @endforelse
                 </div>
 
-                <a href="#" class="view-all">Lihat Semua Program &rarr;</a>
             </div>
         </section>
 
@@ -281,5 +278,36 @@
             <a href="#kontak"><span class="bn-ic">☰</span>Akun</a>
         </nav>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filters .chip');
+            const campaignCards = document.querySelectorAll('.campaign-grid .campaign-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 1. Ubah status active pada tombol
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // 2. Ambil kategori filter yang dipilih
+                    const selectedFilter = this.getAttribute('data-filter');
+
+                    // 3. Filter kartu kampanye
+                    campaignCards.forEach(card => {
+                        const cardCategory = card.getAttribute('data-category');
+
+                        console.log('Card Category:', cardCategory, 'Selected Filter:', selectedFilter); // Debugging
+
+                        if (selectedFilter === 'Semua' || cardCategory === selectedFilter) {
+                            card.style.display = ''; // Tampilkan kartu
+                        } else {
+                            card.style.display = 'none'; // Sembunyikan kartu
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 
 </x-frontend.app>

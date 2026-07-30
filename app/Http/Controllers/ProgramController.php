@@ -84,6 +84,7 @@ class ProgramController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'proposed_by' => 'nullable|string|max:255',
             'description' => 'required|string|max:255',
             'target_amount' => 'required|numeric|min:0',
             'kategori_program_id' => 'required|exists:kategori_programs,id',
@@ -92,20 +93,16 @@ class ProgramController extends Controller
             'is_priority' => 'nullable|boolean',
         ]);
 
-        //handle file upload
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_path = $image->store('program_images', 'public');
-            $request->merge(['image_path' => $image_path]);
-        }
+        
 
         //hanya bisa 1 program yang is_priority = true
         if ($request->input('is_priority')) {
             Program::where('is_priority', true)->update(['is_priority' => false]);
         }
 
-        Program::create([
+        $program = Program::create([
             'title' => $request->input('title'),
+            'proposed_by' => $request->input('proposed_by'),
             'description' => $request->input('description'),
             'target_amount' => $request->input('target_amount'),
             'kategori_program_id' => $request->input('kategori_program_id'),
@@ -114,6 +111,18 @@ class ProgramController extends Controller
             'is_priority' => $request->input('is_priority', false),
             'image_path' => $request->input('image_path', null),
         ]);
+
+        //handle file upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+
+
+            $filename = $program->link . '.' . $image->getClientOriginalExtension();
+            $path = $request->file('image')->storeAs('program_images', $filename, 'public');
+
+            $program->update(['image_path' => 'storage/' . $path]);
+
+        }
 
         return redirect()->route('programs.index')->with('status', 'Program created successfully.');
     }
@@ -131,6 +140,7 @@ class ProgramController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'proposed_by' => 'nullable|string|max:255',
             'description' => 'required|string|max:255',
             'target_amount' => 'required|numeric|min:0',
             'kategori_program_id' => 'required|exists:kategori_programs,id',
@@ -145,6 +155,15 @@ class ProgramController extends Controller
         }
 
         $program->update($request->all());
+
+        //handle file upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = $program->link . '.' . $image->getClientOriginalExtension();
+            $path = $request->file('image')->storeAs('program_images', $filename, 'public');
+
+            $program->update(['image_path' => 'storage/' . $path]);
+        }
 
         return redirect()->route('programs.index')->with('status', 'Program updated successfully.');
     }

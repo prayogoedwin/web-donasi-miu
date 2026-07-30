@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Donasi;
+use App\Models\KategoriProgram;
 
 use App\Models\Program;
 use App\Models\Informasi;
@@ -50,13 +51,15 @@ class FrontEndController extends Controller
 
         $informasi = Informasi::all()->pluck('value', 'key')->toArray();
 
-        $programs = Program::all();
+        $programs = Program::where('status', 'active')->get();
 
         $program_prioritas = Program::where('is_priority', true)->first();
 
+        $kategori_programs = KategoriProgram::all();
+
         // dd($informasi, $trusts, $cara_berdonasi, $programs);
 
-        return view('frontend.mainpage', compact('programs', 'program_prioritas', 'trusts', 'cara_berdonasi', 'informasi', 'informasi_facts', 'alur_steps', 'rekening'));
+        return view('frontend.mainpage', compact('programs', 'program_prioritas', 'trusts', 'cara_berdonasi', 'informasi', 'informasi_facts', 'alur_steps', 'rekening', 'kategori_programs'));
     }
 
     public function donasi(string $link)

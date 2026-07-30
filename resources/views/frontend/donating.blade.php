@@ -6,9 +6,9 @@
 
         <!-- Header / Banner Program -->
         <div class="bg-white rounded-xl mx-3 shadow-sm overflow-hidden border border-gray-200 border-t-8 border-t-gold-700">
-            @if(!empty($program->image))
+            @if(!empty($program->image_path))
             <div class="w-full h-48 sm:h-64 overflow-hidden">
-                <img src="{{ asset('storage/' . $program->image) }}" alt="{{ $program->title }}" class="w-full h-full object-cover">
+                <img src="{{ asset($program->image_path) }}" alt="{{ $program->title }}" class="w-full h-full object-cover">
             </div>
             @endif
             <div class="p-6">

@@ -31,7 +31,7 @@
 
 
         <div class="p-6">
-            <form action="{{ route('programs.store') }}" method="POST" class="max-w-2xl">
+            <form action="{{ route('programs.store') }}" method="POST" class="max-w-2xl" enctype="multipart/form-data">
                 @csrf
                 @method('POST')
 

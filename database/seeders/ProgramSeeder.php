@@ -23,7 +23,7 @@ class ProgramSeeder extends Seeder
                 'collected_amount' => 250000000,
                 'donor_count' => 150,
                 'status' => 'active',
-                'image_path' => null,
+                'image_path' => "storage/program_images/perluasan-lantai-2-untuk-jamaah-wanita.jpg", //image_path = link . image extension, will be generated later // link = title in lowercase, spaces replaced with hyphens, and special characters removed
                 'start_date' => now(),
                 'end_date' => now()->addMonths(6),
             ],
@@ -32,12 +32,12 @@ class ProgramSeeder extends Seeder
                 'proposed_by' => 'Bidang Sosial Masjid',
                 'description' => 'Program ini bertujuan untuk memberikan santunan bulanan kepada 40 anak yatim di Desa Sariharjo, sebagai bentuk kepedulian dan dukungan terhadap pendidikan dan kesejahteraan mereka.',
                 'is_priority' => false,
-                'kategori_program_id' => 2, // Operasional
+                'kategori_program_id' => 3, // Operasional
                 'target_amount' => 500000000,
                 'collected_amount' => 100000000,
                 'donor_count' => 75,
                 'status' => 'active',
-                'image_path' => null,
+                'image_path' => "storage/program_images/santunan-bulanan-40-anak-yatim-sariharjo.jpg", //image_path = link . image extension, will be generated later // link = title in lowercase, spaces replaced with hyphens, and special characters removed
                 'start_date' => now(),
                 'end_date' => now()->addMonths(3),
             ],
@@ -51,7 +51,7 @@ class ProgramSeeder extends Seeder
                 'collected_amount' => 50000000,
                 'donor_count' => 30,
                 'status' => 'active',
-                'image_path' => null,
+                'image_path' => "storage/program_images/infak-listrik-air-dan-kebersihan-masjid.jpg", //image_path = link . image extension, will be generated later // link = title in lowercase, spaces replaced with hyphens, and special characters removed
                 'start_date' => now(),
                 'end_date' => now()->addMonths(1),
             ],
@@ -65,7 +65,7 @@ class ProgramSeeder extends Seeder
                 'collected_amount' => 75000000,
                 'donor_count' => 50,
                 'status' => 'active',
-                'image_path' => null,
+                'image_path' => "storage/program_images/wakaf-al-quran-dan-buku-iqra-tpa.jpg", //image_path = link . image extension, will be generated later // link = title in lowercase, spaces replaced with hyphens, and special characters removed
                 'start_date' => now(),
                 'end_date' => now()->addMonths(4),
             ],
@@ -79,7 +79,7 @@ class ProgramSeeder extends Seeder
                 'collected_amount' => 400000000,
                 'donor_count' => 200,
                 'status' => 'active',
-                'image_path' => null,
+                'image_path' => "storage/program_images/renovasi-tempat-wudhu-dan-toilet-umum.jpg", //image_path = link . image extension, will be generated later // link = title in lowercase, spaces replaced with hyphens, and special characters removed
                 'start_date' => now(),
                 'end_date' => now()->addMonths(5),
             ],
@@ -93,7 +93,7 @@ class ProgramSeeder extends Seeder
                 'collected_amount' => 25000000,
                 'donor_count' => 40,
                 'status' => 'active',
-                'image_path' => null,
+                'image_path' => "storage/program_images/dapur-berkah-jumat-berbagi-nasi-kotak.jpg", //image_path = link . image extension, will be generated later // link = title in lowercase, spaces replaced with hyphens, and special characters removed
                 'start_date' => now(),
                 'end_date' => now()->addMonths(2),
             ],

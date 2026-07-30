@@ -31,7 +31,7 @@
         <!-- Header with Image -->
         <div class="relative h-48 bg-gradient-to-r from-blue-500 to-purple-600 dark:from-blue-600 dark:to-purple-700">
             @if($program->image_path)
-            <img src="{{ asset('storage/' . $program->image_path) }}" alt="{{ $program->title }}" class="w-full h-full object-cover">
+            <img src="{{ asset($program->image_path) }}" alt="{{ $program->title }}" class="w-full h-full object-cover">
             @endif
             <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent"></div>
             <div class="absolute bottom-0 left-0 right-0 p-6">

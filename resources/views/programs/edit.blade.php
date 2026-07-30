@@ -31,7 +31,7 @@
 
 
         <div class="p-6">
-            <form action="{{ route('programs.update', $program->id) }}" method="POST" class="max-w-2xl">
+            <form action="{{ route('programs.update', $program->id) }}" method="POST" class="max-w-2xl" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -45,6 +45,26 @@
                 </div>
                 <div class="mb-4">
                     <x-forms.input label="Deskripsi" name="description" type="text" value="{{ old('description', $program->description) }}" required />
+                </div>
+
+                @if($program->image_path)
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Gambar Saat Ini
+                    </label>
+                    <img src="{{ asset($program->image_path) }}" alt="Current Image" class="w-64 h-auto rounded-lg">
+                </div>
+                @else
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Gambar Saat Ini
+                    </label>
+                    <p class="text-gray-500 dark:text-gray-400">Tidak ada gambar saat ini.</p>
+                </div>
+                @endif
+
+                <div class="mb-4">
+                    <x-forms.input label="Upload Gambar" name="image" type="file" accept="image/*" />
                 </div>
 
 
