@@ -34,7 +34,7 @@
 
                     <!-- Foto berada di luar div teks -->
                     <div class="hero-banner-photo">
-                        <img src="bg.jpg" alt="Interior Masjid Izzatul Ulya">
+                        <img src="{{ asset('images/bg.jpg') }}" alt="Interior Masjid Izzatul Ulya">
                     </div>
                 </section>
 

@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html lang="id">
+<x-frontend.app>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donasi - {{ $program->title }}</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
 
-<body class="bg-purple-50 min-h-screen py-8 px-4 sm:px-6 font-sans">
 
     <div class="max-w-2xl mx-auto space-y-4">
 
         <!-- Header / Banner Program -->
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200 border-t-8 border-t-purple-700">
+        <div class="bg-white rounded-xl mx-3 shadow-sm overflow-hidden border border-gray-200 border-t-8 border-t-gold-700">
             @if(!empty($program->image))
             <div class="w-full h-48 sm:h-64 overflow-hidden">
                 <img src="{{ asset('storage/' . $program->image) }}" alt="{{ $program->title }}" class="w-full h-full object-cover">
@@ -30,7 +21,7 @@
             @csrf
 
             <!-- Section 1: Nominal Donasi -->
-            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div class="bg-white rounded-xl p-6   mx-3 shadow-sm border border-gray-200">
                 <label class="block text-gray-800 font-semibold mb-1">
                     Jumlah Donasi <span class="text-red-500">*</span>
                 </label>
@@ -52,19 +43,19 @@
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500 font-medium">Rp</span>
                     <input type="number"
                         id="jumlah_donasi"
-                        name="jumlah"
+                        name="jumlah_donasi"
                         required
                         min="1000"
                         placeholder="Masukkan nominal lainnya..."
                         class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none transition text-gray-800 font-medium">
                 </div>
-                @error('jumlah')
+                @error('jumlah_donasi')
                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
             <!-- Section 2: Informasi Donatur -->
-            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200 space-y-4">
+            <div class="bg-white rounded-xl p-6  mx-3 shadow-sm border border-gray-200 space-y-4">
 
                 <!-- Input Nama / Opsi Template -->
                 <div>
@@ -99,16 +90,16 @@
 
                 <!-- Input No HP -->
                 <div>
-                    <label for="no_hp" class="block text-gray-800 font-semibold mb-1">
+                    <label for="nomor_hp" class="block text-gray-800 font-semibold mb-1">
                         Nomor WhatsApp / HP <span class="text-red-500">*</span>
                     </label>
                     <input type="tel"
-                        id="no_hp"
-                        name="no_hp"
+                        id="nomor_hp"
+                        name="nomor_hp"
                         required
                         placeholder="08xxxxxxxxxx"
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none transition text-gray-800">
-                    @error('no_hp')
+                    @error('nomor_hp')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
@@ -116,7 +107,7 @@
             </div>
 
             <!-- Section 3: Metode Pembayaran -->
-            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div class="bg-white rounded-xl p-6  mx-3 shadow-sm border border-gray-200">
                 <label class="block text-gray-800 font-semibold mb-3">
                     Pilih Metode Pembayaran <span class="text-red-500">*</span>
                 </label>
@@ -148,15 +139,16 @@
                 @enderror
             </div>
 
-            <!-- Submit Button & Clear Form -->
-            <div class="flex justify-between items-center pt-2">
+            <!-- Submit Button & Clear Form (Centered) -->
+            <div class="flex flex-col mx-3 items-center justify-center space-y-3 pt-4">
                 <button type="submit"
-                    class="bg-purple-700 hover:bg-purple-800 text-white font-semibold px-8 py-3 rounded-lg shadow transition hover:shadow-md">
+                    class="w-full sm:w-auto min-w-[200px] bg-purple-700 hover:bg-purple-800 text-white font-semibold px-8 py-3 rounded-lg shadow transition hover:shadow-md text-center">
                     Kirim Donasi
                 </button>
+
                 <button type="reset"
                     onclick="resetNominal()"
-                    class="text-xs text-gray-500 hover:text-purple-700 underline">
+                    class="text-xs text-gray-500 hover:text-purple-700 underline transition">
                     Kosongkan Formulir
                 </button>
             </div>
@@ -180,6 +172,5 @@
             document.getElementById('nama').value = '';
         }
     </script>
-</body>
 
-</html>
+</x-frontend.app>

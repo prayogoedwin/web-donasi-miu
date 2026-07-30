@@ -63,29 +63,31 @@ class FrontEndController extends Controller
 
         $template_name = config('helper.template_name');
 
-        return view('frontend.donating', compact('program', 'metode_pembayarans', 'template_name'));
+        $informasi = Informasi::all()->pluck('value', 'key')->toArray();
+
+
+        return view('frontend.donating', compact('program', 'metode_pembayarans', 'template_name', 'informasi'));
     }
 
     public function donasiStore(Program $program, Request $request)
     {
         $request->validate([
-            'amount' => 'required|numeric|min:1',
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:20',
+            'jumlah_donasi' => 'required|numeric|min:1',
+            'nama' => 'required|string|max:255',
+            'nomor_hp' => 'required|string|max:20',
             'metode_pembayaran_id' => 'required|exists:metode_pembayarans,id',
         ]);
 
         $donasi = Donasi::create([
             'program_id' => $program->id,
-            'amount' => $request->input('amount'),
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'phone' => $request->input('phone'),
+            'jumlah_donasi' => $request->input('jumlah_donasi'),
+            'nama' => $request->input('nama'),
+            'nomor_hp' => $request->input('nomor_hp'),
             'metode_pembayaran_id' => $request->input('metode_pembayaran_id'),
         ]);
 
+        // dd($donasi);
 
-        return view('frontend.mainpage', compact('programs', 'program_prioritas', 'trusts', 'cara_berdonasi', 'informasi', 'informasi_facts', 'alur_steps', 'rekening'));
+        return redirect()->route('frontend.mainpage')->with('status', 'Donasi berhasil.');
     }
 }

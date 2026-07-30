@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <link rel="stylesheet" href="{{ asset('css/frontend.css') }}">
 </head>
 
@@ -16,7 +18,7 @@
     <header>
         <div class="container nav">
             <a href="#" class="brand">
-                <img src="logo.png" alt="Logo Masjid Izzatul Ulya">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo Masjid Izzatul Ulya">
                 <span class="brand-text">
                     <span class="name">'Izzatul 'Ulya</span>
                 </span>
