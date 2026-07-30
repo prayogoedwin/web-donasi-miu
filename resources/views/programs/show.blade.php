@@ -44,6 +44,14 @@
             </div>
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Diusulkan Oleh
+                </label>
+                <div class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    {{ $program->proposed_by ?? '-' }}
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Deskripsi
                 </label>
                 <div class="text-lg font-semibold text-gray-900 dark:text-gray-100">

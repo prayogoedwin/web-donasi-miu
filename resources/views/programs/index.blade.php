@@ -45,8 +45,8 @@
                 <thead class="bg-gray-50 dark:bg-gray-900">
                     <tr>
                         
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Title</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Description</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Judul</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Pengusul</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Kategori</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Progress</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Tanggal Akhir</th>
@@ -78,7 +78,7 @@
                 ajax: "{{ route('programs.indexTable') }}",
                 columns: [
                     { data: 'title', name: 'title' },
-                    { data: 'description', name: 'description' },
+                    { data: 'proposed_by', name: 'proposed_by' },
                     { data: 'kategori_programs', name: 'kategori_programs', orderable: false, searchable: false },
                     { data: 'progress', name: 'progress' },
                     { data: 'end_date', name: 'end_date' },

@@ -32,6 +32,7 @@ class Program extends Model
     
     protected $fillable = [
         'title',
+        'proposed_by',
         'link',
         'description',
         'is_priority',

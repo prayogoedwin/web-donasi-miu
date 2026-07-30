@@ -132,6 +132,7 @@ class FrontEndController extends Controller
             // 6. Redirect ke halaman pembayaran dengan membawa token
             return redirect()->route('donasi.pembayaran', $donasi->order_id);
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return back()->with('error', 'Gagal memproses pembayaran: ' . $e->getMessage());
         }
     }

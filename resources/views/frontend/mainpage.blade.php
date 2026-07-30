@@ -101,7 +101,7 @@
                     <div class="featured-img"></div>
                     <div class="featured-body">
                         <h3>{{ $program_prioritas->title ?? '' }}</h3>
-                        <p>{{ $program_prioritas->description ?? '' }}</p>
+                        <p>oleh {{ $program_prioritas->proposed_by ?? '' }}</p>
                         <div class="progress-wrap">
                             <div class="progress-track">
                                 <div class="progress-fill" style="width:64%"></div>
@@ -147,7 +147,7 @@
                         </div>
                         <div class="campaign-body">
                             <h4>{{ $program->title }}</h4>
-                            <p class="by">oleh {{ $program->organizer ?? 'Takmir Masjid' }}</p>
+                            <p class="by">oleh {{ $program->proposed_by ?? 'Takmir Masjid' }}</p>
 
                             @php
                             // Menghitung persentase progres donasi
@@ -196,7 +196,7 @@
                     </div>
                 </div>
                 <div class="about-logo-wrap">
-                    <img src="logo.png" alt="Logo Masjid Izzatul Ulya">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo Masjid Izzatul Ulya">
                 </div>
             </div>
         </section>
@@ -234,7 +234,7 @@
                 <div class="footer-grid">
                     <div>
                         <div class="footer-brand">
-                            <img src="logo.png" alt="Logo">
+                            <img src="{{ asset('images/logo.png') }}" alt="Logo">
                             <div>
                                 <div class="name">'Izzatul 'Ulya</div>
                                 <div class="place">Masjid Nandan, Sariharjo, Ngaglik, Sleman</div>

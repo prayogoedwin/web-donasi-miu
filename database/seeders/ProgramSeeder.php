@@ -15,7 +15,8 @@ class ProgramSeeder extends Seeder
         $data = [
             [
                 'title' => 'Perluasan Lantai 2 untuk Jamaah Wanita',
-                'description' => 'oleh Takmir Masjid \'Izzatul \'Ulya',
+                'proposed_by' => 'Takmir Masjid \'Izzatul \'Ulya',
+                'description' => 'Program ini bertujuan untuk memperluas area sholat lantai 2 khusus untuk jamaah wanita, sehingga dapat menampung lebih banyak jamaah dan memberikan kenyamanan dalam beribadah.',
                 'is_priority' => false,
                 'kategori_program_id' => 1, // Pembangunan
                 'target_amount' => 1000000000,
@@ -28,7 +29,8 @@ class ProgramSeeder extends Seeder
             ],
             [
                 'title' => 'Santunan Bulanan 40 Anak Yatim Sariharjo',
-                'description' => 'oleh Bidang Sosial Masjid',
+                'proposed_by' => 'Bidang Sosial Masjid',
+                'description' => 'Program ini bertujuan untuk memberikan santunan bulanan kepada 40 anak yatim di Desa Sariharjo, sebagai bentuk kepedulian dan dukungan terhadap pendidikan dan kesejahteraan mereka.',
                 'is_priority' => false,
                 'kategori_program_id' => 2, // Operasional
                 'target_amount' => 500000000,
@@ -41,7 +43,8 @@ class ProgramSeeder extends Seeder
             ],
             [
                 'title' => 'Infak Listrik, Air & Kebersihan Masjid',
-                'description' => 'Kebutuhan rutin bulanan',
+                'proposed_by' => 'Bidang Operasional Masjid',
+                'description' => 'Program ini bertujuan untuk mengumpulkan dana infak guna membiayai kebutuhan listrik, air, dan kebersihan masjid, sehingga masjid tetap bersih, nyaman, dan dapat digunakan oleh jamaah dengan baik.',
                 'is_priority' => false,
                 'kategori_program_id' => 2, // Operasional
                 'target_amount' => 200000000,
@@ -54,7 +57,8 @@ class ProgramSeeder extends Seeder
             ],
             [
                 'title' => "Wakaf Al-Qur'an & Buku Iqra TPA",
-                'description' => 'oleh Bidang Dakwah & TPA',
+                'proposed_by' => 'Bidang Dakwah & TPA',
+                'description' => 'Program ini bertujuan untuk mengumpulkan dana wakaf guna membeli Al-Qur\'an dan buku Iqra untuk Taman Pendidikan Al-Qur\'an (TPA) di masjid, sehingga anak-anak dapat belajar membaca Al-Qur\'an dengan baik.',
                 'is_priority' => false,
                 'kategori_program_id' => 4, // Pendidikan
                 'target_amount' => 300000000,
@@ -67,7 +71,8 @@ class ProgramSeeder extends Seeder
             ],
             [
                 'title' => 'Renovasi Tempat Wudhu & Toilet Umum',
-                'description' => 'oleh Takmir Masjid \'Izzatul \'Ulya',
+                'proposed_by' => 'Takmir Masjid \'Izzatul \'Ulya',
+                'description' => 'Program ini bertujuan untuk merenovasi tempat wudhu dan toilet umum di masjid, sehingga fasilitas tersebut menjadi lebih bersih, nyaman, dan layak digunakan oleh jamaah.',
                 'is_priority' => true,
                 'kategori_program_id' => 1, // Pembangunan
                 'target_amount' => 800000000,
@@ -80,7 +85,8 @@ class ProgramSeeder extends Seeder
             ],
             [
                 'title' => 'Dapur Berkah Jumat — Berbagi Nasi Kotak',
-                'description' => 'oleh Bidang Sosial Masjid',
+                'proposed_by' => 'Bidang Sosial Masjid',
+                'description' => 'Program ini bertujuan untuk menyediakan nasi kotak bagi masyarakat kurang mampu setiap hari Jumat, sebagai bentuk kepedulian dan berbagi berkah kepada sesama.',
                 'is_priority' => false,
                 'kategori_program_id' => 2, // Operasional
                 'target_amount' => 100000000,

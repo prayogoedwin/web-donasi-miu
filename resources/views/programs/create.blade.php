@@ -41,6 +41,9 @@
                     <x-forms.input label="Judul" name="title" type="text" value="{{ old('title') }}" required />
                 </div>
                 <div class="mb-4">
+                    <x-forms.input label="Diusulkan Oleh" name="proposed_by" type="text" value="{{ old('proposed_by') }}" placeholder="Takmir Masjid" />
+                </div>
+                <div class="mb-4">
                     <x-forms.input label="Deskripsi" name="description" type="text" value="{{ old('description') }}" required />
                 </div>
 

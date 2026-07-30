@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('link')->unique();
             $table->text('description');
+            $table->string('proposed_by')->nullable();
             $table->boolean('is_priority')->default(false);
             $table->foreignId('kategori_program_id')->constrained('kategori_programs')->default(1); // Pembangunan, Operasional, Sosial, Pendidikan, Yatim & Dhuafa, Kesehatan, Lainnya
             $table->decimal('target_amount', 15, 2);
