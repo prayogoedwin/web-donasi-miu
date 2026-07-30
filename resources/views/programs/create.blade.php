@@ -47,6 +47,9 @@
                     <x-forms.input label="Deskripsi" name="description" type="text" value="{{ old('description') }}" required />
                 </div>
 
+                <div class="mb-4">
+                    <x-forms.input label="Upload Gambar" name="image" type="file" accept="image/*" />
+                </div>
 
                 <div class="mb-6">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">

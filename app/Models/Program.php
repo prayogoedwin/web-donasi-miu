@@ -14,6 +14,8 @@ class Program extends Model
     // Schema::create('programs', function (Blueprint $table) {
     //         $table->id();
     //         $table->string('title');
+    //         $table->string('proposed_by')->nullable();
+    //         $table->string('link')->unique();
     //         $table->text('description');
     //         $table->boolean('is_priority')->default(false);
     //         $table->foreignId('kategori_id')->constrained('kategori_programs')->default(1); // Pembangunan, Operasional, Sosial, Pendidikan, Yatim & Dhuafa, Kesehatan, Lainnya

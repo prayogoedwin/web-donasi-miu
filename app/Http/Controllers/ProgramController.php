@@ -92,12 +92,28 @@ class ProgramController extends Controller
             'is_priority' => 'nullable|boolean',
         ]);
 
+        //handle file upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $image_path = $image->store('program_images', 'public');
+            $request->merge(['image_path' => $image_path]);
+        }
+
         //hanya bisa 1 program yang is_priority = true
         if ($request->input('is_priority')) {
             Program::where('is_priority', true)->update(['is_priority' => false]);
         }
 
-        Program::create($request->all());
+        Program::create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'target_amount' => $request->input('target_amount'),
+            'kategori_program_id' => $request->input('kategori_program_id'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+            'is_priority' => $request->input('is_priority', false),
+            'image_path' => $request->input('image_path', null),
+        ]);
 
         return redirect()->route('programs.index')->with('status', 'Program created successfully.');
     }
