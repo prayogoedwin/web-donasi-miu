@@ -5,90 +5,114 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Donasi;
 use App\Models\KategoriProgram;
-
 use App\Models\Program;
 use App\Models\Informasi;
 use App\Models\MetodePembayaran;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Cache; // Import Facade Cache
 use Midtrans\Config;
 use Midtrans\Snap;
 
 class FrontEndController extends Controller
 {
+    private int $cacheLong = 86400; // 1 Hari
+    private int $cacheShort = 60; // 1 Menit
+
+
     public function index()
     {
+        // 1. Cache Data Informasi & Key-Value (Tahan selama 1 hari / 86400 detik)
+        $informasi = Cache::remember('site_informasi_pluck', $this->cacheLong, function () {
+            return Informasi::all()->pluck('value', 'key')->toArray();
+        });
 
-        $trusts = Informasi::where('parent_id', function ($query) {
-            $query->select('id')
-                ->from('informasis')
-                ->where('key', 'keunggulan_portal');
-        })->get();
+        $trusts = Cache::remember('site_trusts', $this->cacheLong, function () {
+            return Informasi::where('parent_id', function ($query) {
+                $query->select('id')->from('informasis')->where('key', 'keunggulan_portal');
+            })->get();
+        });
 
-        $informasi_facts = Informasi::where('parent_id', function ($query) {
-            $query->select('id')
-                ->from('informasis')
-                ->where('key', 'statistik_masjid');
-        })->get();
+        $informasi_facts = Cache::remember('site_facts', $this->cacheLong, function () {
+            return Informasi::where('parent_id', function ($query) {
+                $query->select('id')->from('informasis')->where('key', 'statistik_masjid');
+            })->get();
+        });
 
-        $cara_berdonasi = Informasi::where('parent_id', function ($query) {
-            $query->select('id')
-                ->from('informasis')
-                ->where('key', 'cara_berdonasi');
-        })->get();
+        $cara_berdonasi = Cache::remember('site_cara_berdonasi', $this->cacheLong, function () {
+            return Informasi::where('parent_id', function ($query) {
+                $query->select('id')->from('informasis')->where('key', 'cara_berdonasi');
+            })->get();
+        });
 
-        $alur_steps = Informasi::where('parent_id', function ($query) {
-            $query->select('id')
-                ->from('informasis')
-                ->where('key', 'cara_berdonasi');
-        })->get();
+        // Note: alur_steps memanggil query yang sama dengan cara_berdonasi, bisa reuse variable
+        $alur_steps = $cara_berdonasi;
 
-        $rekening = Informasi::where('parent_id', function ($query) {
-            $query->select('id')
-                ->from('informasis')
-                ->where('key', 'rekening_resmi');
-        })->get();
+        $rekening = Cache::remember('site_rekening_resmi', $this->cacheLong, function () {
+            return Informasi::where('parent_id', function ($query) {
+                $query->select('id')->from('informasis')->where('key', 'rekening_resmi');
+            })->get();
+        });
 
-        $informasi = Informasi::all()->pluck('value', 'key')->toArray();
+        // 2. Cache Kategori Program
+        $kategori_programs = Cache::remember('kategori_programs_all', $this->cacheLong, function () {
+            return KategoriProgram::all();
+        });
 
-        $programs = Program::where('status', 'active')->get();
+        // 3. Cache Program (Durasi lebih pendek, 1 menit)
+        $programs = Cache::remember('programs_active', $this->cacheShort, function () {
+            return Program::where('status', 'active')->get();
+        });
 
-        $program_prioritas = Program::where('is_priority', true)->first();
+        $program_prioritas = Cache::remember('program_priority', $this->cacheShort, function () {
+            return Program::where('is_priority', true)->first();
+        });
 
-        $kategori_programs = KategoriProgram::all();
-
-        // dd($informasi, $trusts, $cara_berdonasi, $programs);
-
-        return view('frontend.mainpage', compact('programs', 'program_prioritas', 'trusts', 'cara_berdonasi', 'informasi', 'informasi_facts', 'alur_steps', 'rekening', 'kategori_programs'));
+        return view('frontend.mainpage', compact(
+            'programs',
+            'program_prioritas',
+            'trusts',
+            'cara_berdonasi',
+            'informasi',
+            'informasi_facts',
+            'alur_steps',
+            'rekening',
+            'kategori_programs'
+        ));
     }
 
     public function donasi(string $link)
     {
-        $program = Program::where('link', $link)->firstOrFail();
+        // Cache program detail berdasarkan slug/link
+        $program = Cache::remember("program_detail_{$link}", $this->cacheShort, function () use ($link) {
+            return Program::where('link', $link)->firstOrFail();
+        });
 
-        $metode_pembayarans = MetodePembayaran::all();
+        // Cache metode pembayaran (1 Hari)
+        $metode_pembayarans = Cache::remember('metode_pembayaran_all', $this->cacheLong, function () {
+            return MetodePembayaran::all();
+        });
 
         $template_name = config('helper.template_name');
 
-        $informasi = Informasi::all()->pluck('value', 'key')->toArray();
-
+        $informasi = Cache::remember('site_informasi_pluck', $this->cacheLong, function () {
+            return Informasi::all()->pluck('value', 'key')->toArray();
+        });
 
         return view('frontend.donating', compact('program', 'metode_pembayarans', 'template_name', 'informasi'));
     }
 
     public function donasiStore(Program $program, Request $request)
     {
+        // JANGAN DICACHE: Proses penyimpanan transaksi & request ke API Midtrans
         $request->validate([
-            'jumlah_donasi' => 'required|numeric|min:1000', // Batas minimal pembayaran online
-            'nama'          => 'required|string|max:255',
-            'nomor_hp'      => 'required|string|max:20',
-            'metode_pembayaran_id' => 'nullable', // Boleh diabaikan jika memilih metode langsung di popup Snap
+            'jumlah_donasi'        => 'required|numeric|min:1000',
+            'nama'                 => 'required|string|max:255',
+            'nomor_hp'             => 'required|string|max:20',
+            'metode_pembayaran_id' => 'nullable',
         ]);
 
-        // 1. Generate Order ID Unik
         $orderId = 'DONASI-' . time() . '-' . Str::random(5);
 
-        // 2. Simpan Data Donasi Awal ke Database
         $donasi = Donasi::create([
             'order_id'             => $orderId,
             'program_id'           => $program->id,
@@ -99,13 +123,11 @@ class FrontEndController extends Controller
             'status_pembayaran'    => 'pending',
         ]);
 
-        // 3. Konfigurasi SDK Midtrans
         Config::$serverKey     = config('services.midtrans.server_key', env('MIDTRANS_SERVER_KEY'));
         Config::$isProduction  = config('services.midtrans.is_production', env('MIDTRANS_IS_PRODUCTION', false));
         Config::$isSanitized   = config('services.midtrans.is_sanitized', env('MIDTRANS_IS_SANITIZED', true));
         Config::$is3ds         = config('services.midtrans.is_3ds', env('MIDTRANS_IS_3DS', true));
 
-        // 4. Susun Payload untuk Midtrans Snap
         $params = [
             'transaction_details' => [
                 'order_id'     => $donasi->order_id,
@@ -126,27 +148,23 @@ class FrontEndController extends Controller
         ];
 
         try {
-            // 5. Minta Snap Token dari Midtrans
             $snapToken = Snap::getSnapToken($params);
-
-            // Update record donasi dengan Snap Token
             $donasi->update(['snap_token' => $snapToken]);
 
-            // 6. Redirect ke halaman pembayaran dengan membawa token
             return redirect()->route('donasi.pembayaran', $donasi->order_id);
         } catch (\Exception $e) {
-            dd($e->getMessage());
             return back()->with('error', 'Gagal memproses pembayaran: ' . $e->getMessage());
         }
     }
 
     public function pembayaran(string $orderId)
     {
+        // JANGAN DICACHE: Memanggil data pembayaran spesifik per transaksi user
         $donasi = Donasi::where('order_id', $orderId)->firstOrFail();
 
         return view('frontend.pembayaran', [
             'donasi' => $donasi,
-            'clientKey' => env('MIDTRANS_CLIENT_KEY')
+            'clientKey' => config('services.midtrans.client_key', env('MIDTRANS_CLIENT_KEY'))
         ]);
     }
 }
