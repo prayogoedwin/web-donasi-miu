@@ -1,6 +1,6 @@
 <x-frontend.app>
-
-    <div class="">
+    <!-- paksa mobile view seperti kitabisa.com -->
+    <div style="max-width: 480px; margin: 0 auto; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
         <div class="app-shell">
             <div class="container">
 
@@ -9,7 +9,7 @@
                         <circle cx="11" cy="11" r="7" stroke="#A9791E" stroke-width="2" />
                         <path d="M20 20L16.5 16.5" stroke="#A9791E" stroke-width="2" stroke-linecap="round" />
                     </svg>
-                    <input type="text" placeholder="Coba cari &ldquo;Wakaf Kubah Masjid&rdquo;">
+                    <input type="text" id="searchProgram" placeholder="Coba cari &ldquo;Wakaf Kubah Masjid&rdquo;">
                 </label>
 
                 <section class="hero-banner">
@@ -122,7 +122,7 @@
             </div>
         </section>
 
-        <section style="padding-top:0;">
+        <section id="programSection" style="padding-top:0;">
             <div class="container">
                 <div class="section-head">
                     <p class="eyebrow">Seluruh Program</p>
@@ -134,12 +134,13 @@
                     @foreach($kategori_programs as $kategori)
                     <button class="chip" data-filter="{{ $kategori->title }}">{{ $kategori->title }}</button>
                     @endforeach
-                    
+
                 </div>
 
                 <div class="campaign-grid">
                     @forelse($programs as $program)
-                    <div class="campaign-card" data-category="{{ $program->kategori_program->title ?? 'lainnya' }}">
+                    <div class="campaign-card" data-category="{{ strtolower($program->kategori_program->title ?? 'lainnya') }}"
+                        data-title="{{ strtolower($program->title) }}">
                         <div class="campaign-thumb" style="background-image: url('{{ asset($program->image_path) }}');">
                             <span class="campaign-cat">{{ $program->kategori_program->title  }}</span>
                         </div>
@@ -172,6 +173,10 @@
                         <p>Belum ada program donasi yang tersedia saat ini.</p>
                     </div>
                     @endforelse
+                </div>
+
+                <div id="emptySearch" style="display:none; text-align:center; padding:30px;">
+                    Program tidak ditemukan.
                 </div>
 
             </div>
@@ -243,7 +248,7 @@
                             <a href="{{ $link->value }}" target="_blank">{{ $link->key }}</a>
                             @empty
                             @endforelse
-                            
+
                         </div>
                     </div>
                     <div>
@@ -308,6 +313,66 @@
                         }
                     });
                 });
+            });
+
+
+            const searchInput = document.getElementById("searchProgram");
+            const cards = document.querySelectorAll(".campaign-card");
+            const chips = document.querySelectorAll(".chip");
+
+            let activeCategory = "semua";
+
+            function filterPrograms() {
+                const keyword = searchInput.value.toLowerCase().trim();
+
+                cards.forEach(card => {
+                    const title = card.dataset.title;
+                    const category = card.dataset.category;
+
+                    const matchKeyword =
+                        title.includes(keyword) ||
+                        category.includes(keyword);
+
+                    const matchCategory =
+                        activeCategory === "semua" ||
+                        category === activeCategory;
+
+                    card.style.display =
+                        (matchKeyword && matchCategory) ? "" : "none";
+                });
+            }
+
+            // Search
+            searchInput.addEventListener("input", filterPrograms);
+
+            // Filter kategori
+            chips.forEach(chip => {
+                chip.addEventListener("click", function() {
+
+                    chips.forEach(c => c.classList.remove("active"));
+                    this.classList.add("active");
+
+                    activeCategory = this.dataset.filter.toLowerCase();
+
+                    filterPrograms();
+                });
+            });
+
+            const programSection = document.getElementById("programSection");
+
+            searchInput.addEventListener("keydown", function(e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+
+                    // Jalankan filter (jika belum otomatis)
+                    filterPrograms();
+
+                    // Scroll ke daftar program
+                    programSection.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }
             });
         });
     </script>
