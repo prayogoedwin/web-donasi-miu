@@ -53,6 +53,12 @@ class FrontEndController extends Controller
             })->get();
         });
 
+        $link_link = Cache::remember('site_link_link', $this->cacheLong, function () {
+            return Informasi::where('parent_id', function ($query) {
+                $query->select('id')->from('informasis')->where('key', 'link_link');
+            })->get();
+        });
+
         // 2. Cache Kategori Program
         $kategori_programs = Cache::remember('kategori_programs_all', $this->cacheLong, function () {
             return KategoriProgram::all();
@@ -76,7 +82,8 @@ class FrontEndController extends Controller
             'informasi_facts',
             'alur_steps',
             'rekening',
-            'kategori_programs'
+            'kategori_programs',
+            'link_link'
         ));
     }
 

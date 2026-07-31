@@ -111,5 +111,23 @@ class InformasiSeeder extends Seeder
             $item['parent_id'] = $caraDonasi->id;
             Informasi::create($item);
         }
+
+        // 6. link-link
+        $link_link = Informasi::create([
+            'key' => 'link_link',
+            'value' => 'Link-Link',
+        ]);
+
+        $linkLinkData = [
+            ['key' => 'IG', 'value' => 'https://instagram.com/your_instagram_handle'],
+            ['key' => 'FB', 'value' => 'https://facebook.com/your_facebook_page'],
+            ['key' => 'WA', 'value' => 'https://wa.me/your_whatsapp_number'],
+            ['key' => 'MAP', 'value' => 'https://maps.google.com/?q=your_address'],
+        ];
+
+        foreach ($linkLinkData as $item) {
+            $item['parent_id'] = $link_link->id;
+            Informasi::create($item);
+        }
     }
 }

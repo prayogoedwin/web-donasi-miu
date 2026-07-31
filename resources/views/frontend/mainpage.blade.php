@@ -239,9 +239,11 @@
                         </div>
                         <p class="footer-desc">Portal donasi resmi Masjid 'Izzatul 'Ulya. Dikelola oleh Takmir untuk kemakmuran masjid, pendidikan, serta kepedulian sosial jamaah dan warga sekitar.</p>
                         <div class="social-row">
-                            <a href="#">IG</a>
-                            <a href="#">FB</a>
-                            <a href="#">WA</a>
+                            @forelse($link_link as $link)
+                            <a href="{{ $link->value }}" target="_blank">{{ $link->key }}</a>
+                            @empty
+                            @endforelse
+                            
                         </div>
                     </div>
                     <div>
